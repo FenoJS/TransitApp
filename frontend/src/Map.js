@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react';
-import L from 'leaflet';
+import React from 'react';
+import { Map as MapContainer } from 'react-leaflet';
+import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 
 const Map = () => {
   const style = {
-    height: '100vh',
+    height: 'calc(100vh - 70px)',
     width: '100%',
   };
 
-  useEffect(() => {
-    const mymap = L.map('mapid').setView([52.229675, 21.01223], 13);
+  const position = [52.229675, 21.01223];
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-      maxZoom: 18,
-    }).addTo(mymap);
-  }, []);
-
-  return <div id="mapid" style={style}></div>;
+  return (
+    <MapContainer center={position} zoom={13} style={style} zoomControl={false}>
+      <ZoomControl position="topright" />
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+      />
+    </MapContainer>
+  );
 };
 
 export default Map;

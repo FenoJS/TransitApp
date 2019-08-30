@@ -1,11 +1,17 @@
 import React from 'react';
-import Map from './Map'
+import Map from './Map';
+import Header from './Header';
+import RoutingPanel from './RoutingPanel';
 
 import './App.css';
 
 function App() {
   return (
-  <Map/>
+    <>
+      <Header />
+      <Map />
+      <RoutingPanel />
+    </>
   );
 }
 
