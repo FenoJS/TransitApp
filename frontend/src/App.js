@@ -3,16 +3,18 @@ import Map from './Map';
 import Header from './Header';
 import RoutingPanel from './RoutingPanel';
 
-import './App.css';
+//import styles from './App.module.css';
 
-function App() {
-  return (
-    <>
-      <Header />
-      <Map />
-      <RoutingPanel />
-    </>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <>
+        <Header />
+        <Map />
+        <RoutingPanel />
+      </>
+    );
+  }
 }
 
 export default App;

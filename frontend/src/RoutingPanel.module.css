@@ -1,0 +1,10 @@
+.panel {
+  position: absolute;
+  left: 30px;
+  top: 100px;
+  height: 500px;
+  width: 400px;
+  background-color: darkgrey;
+  opacity: 0.5;
+  z-index: 9999;
+}

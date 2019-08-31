@@ -29,6 +29,7 @@
     "eol-last": 0,
     "space-before-function-paren": ["error", "never"],
     "no-param-reassign": ["error", { "props": false }],
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "react/state-in-constructor": 0
   }
 }
