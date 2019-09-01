@@ -12,13 +12,16 @@ class App extends Component {
       mapPosition: [52.229675, 21.01223],
       startDirectionStreet: '',
       goalDirectionStreet: '',
-      startMarkerCord: null,
-      goalMarkerCord: null,
+      startMarkerCords: null,
+      goalMarkerCords: null,
     };
   }
 
-  handleMarkersCord = e => {
-    console.log('get cords');
+  handleMarkersCords = (marker, cords) => {
+    console.log('get cords', marker, cords);
+    this.setState({
+      [marker]: cords,
+    });
   };
 
   render() {
@@ -27,9 +30,9 @@ class App extends Component {
         <Header />
         <Map
           mapPosition={this.state.mapPosition}
-          handleMarkersCord={this.handleMarkersCord}
-          startMarkerCord={this.state.startMarkerCord}
-          goalMarkerCord={this.state.goalMarkerCord}
+          handleMarkersCords={this.handleMarkersCords}
+          startMarkerCords={this.state.startMarkerCords}
+          goalMarkerCords={this.state.goalMarkerCords}
         />
         <RoutingPanel />
       </>

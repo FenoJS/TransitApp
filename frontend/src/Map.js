@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Map as MapContainer } from 'react-leaflet';
 import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 
-let numMapClicks = 0;
-
 const mapRootStyles = {
   height: 'calc(100vh - 70px)',
   width: '100%',
@@ -14,37 +12,27 @@ class Map extends Component {
     super(props);
     this.popup = React.createRef();
     this.state = {
-      startMarkerCords: null,
-      goalMarkerCords: null,
+      isPopup: false,
     };
   }
 
-  getLatLng = e => {
-    console.log(e.latlng);
-  };
-
-  popupHandler = e => {
-    this.getLatLng(e);
-  };
-
   handleMarkersPosition = e => {
-    this.setState({
-      [e.target.id]: this.state.popup.position,
-    });
+    this.props.handleMarkersCords(e.target.id, this.state.popupCords);
   };
 
   closePopusOnClick = e => {
-    console.log(e.target);
-    this.popup.current.leafletElement.options.leaflet.map.closePopup();
-
+    // this.popup.current.leafletElement.options.leaflet.map.closePopup();
+    this.setState({
+      isPopup: false,
+    });
     this.handleMarkersPosition(e);
   };
 
-  addPopup = e => {
+  togglePopup = e => {
+    const isPopup = this.state.isPopup;
     this.setState({
-      popup: {
-        position: e.latlng,
-      },
+      isPopup: !isPopup,
+      popupCords: e.latlng,
     });
   };
 
@@ -54,40 +42,25 @@ class Map extends Component {
     console.log(e.target._latlng);
   };
 
-  componentDidUpdate(prevState) {
-    if (
-      this.state.startMarkerCords !== prevState.startMarkerCords &&
-      this.state.goalMarkerCords !== prevState.goalMarkerCords
-    ) {
-      console.log('startMarkerCords or goalMarkerCords has changed');
-      this.props.handleMarkersCord();
-    }
-  }
-
   render() {
-    const { popup, startMarkerCords, goalMarkerCords } = this.state;
-    console.log(popup);
-
+    const { isPopup, popupCords } = this.state;
+    console.log(this.props);
     return (
       <MapContainer
         center={this.props.mapPosition}
         zoom={13}
         style={mapRootStyles}
         zoomControl={false}
-        onClick={this.addPopup}
-        onContextMenu={this.addPopup}
+        onClick={this.togglePopup}
+        onContextMenu={this.togglePopup}
       >
         <ZoomControl position="topright" />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
-        {popup && (
-          <Popup
-            key={`popup-${popup.key}`}
-            position={popup.position}
-            ref={this.popup}
-          >
+        {isPopup && (
+          <Popup position={popupCords} ref={this.popup}>
             <button onClick={this.closePopusOnClick} id="startMarkerCords">
               Ustaw lokalizację początkową
             </button>
@@ -96,16 +69,16 @@ class Map extends Component {
             </button>
           </Popup>
         )}
-        {startMarkerCords && (
+        {this.props.startMarkerCords && (
           <Marker
-            position={startMarkerCords}
+            position={this.props.startMarkerCords}
             draggable={true}
             onDragEnd={this.updateLatLng}
           ></Marker>
         )}
-        {goalMarkerCords && (
+        {this.props.goalMarkerCords && (
           <Marker
-            position={goalMarkerCords}
+            position={this.props.goalMarkerCords}
             draggable={true}
             onMove={this.updateLatLng}
           ></Marker>
