@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Map as MapContainer } from 'react-leaflet';
 import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 
 let numMapClicks = 0;
 
-class Map extends React.Component {
+const mapRootStyles = {
+  height: 'calc(100vh - 70px)',
+  width: '100%',
+};
+
+class Map extends Component {
   constructor(props) {
     super(props);
     this.popup = React.createRef();
     this.state = {
-      mapStyle: {
-        height: 'calc(100vh - 70px)',
-        width: '100%',
-      },
-      mapPosition: [52.229675, 21.01223],
-      startMarkerCord: null,
-      finishMarkerCord: null,
+      startMarkerCords: null,
+      goalMarkerCords: null,
     };
   }
 
@@ -27,19 +27,22 @@ class Map extends React.Component {
     this.getLatLng(e);
   };
 
-  closePopusOnClick = e => {
-    console.log(e.target);
-    this.popup.current.leafletElement.options.leaflet.map.closePopup();
-
+  handleMarkersPosition = e => {
     this.setState({
       [e.target.id]: this.state.popup.position,
     });
   };
 
+  closePopusOnClick = e => {
+    console.log(e.target);
+    this.popup.current.leafletElement.options.leaflet.map.closePopup();
+
+    this.handleMarkersPosition(e);
+  };
+
   addPopup = e => {
     this.setState({
       popup: {
-        key: numMapClicks++,
         position: e.latlng,
       },
     });
@@ -51,21 +54,25 @@ class Map extends React.Component {
     console.log(e.target._latlng);
   };
 
+  componentDidUpdate(prevState) {
+    if (
+      this.state.startMarkerCords !== prevState.startMarkerCords &&
+      this.state.goalMarkerCords !== prevState.goalMarkerCords
+    ) {
+      console.log('startMarkerCords or goalMarkerCords has changed');
+      this.props.handleMarkersCord();
+    }
+  }
+
   render() {
-    const {
-      popup,
-      mapPosition,
-      mapStyle,
-      startMarkerCord,
-      finishMarkerCord,
-    } = this.state;
+    const { popup, startMarkerCords, goalMarkerCords } = this.state;
     console.log(popup);
 
     return (
       <MapContainer
-        center={mapPosition}
+        center={this.props.mapPosition}
         zoom={13}
-        style={mapStyle}
+        style={mapRootStyles}
         zoomControl={false}
         onClick={this.addPopup}
         onContextMenu={this.addPopup}
@@ -81,24 +88,24 @@ class Map extends React.Component {
             position={popup.position}
             ref={this.popup}
           >
-            <button onClick={this.closePopusOnClick} id="startMarkerCord">
+            <button onClick={this.closePopusOnClick} id="startMarkerCords">
               Ustaw lokalizację początkową
             </button>
-            <button onClick={this.closePopusOnClick} id="finishMarkerCord">
+            <button onClick={this.closePopusOnClick} id="goalMarkerCords">
               Ustaw lokalizację docelową
             </button>
           </Popup>
         )}
-        {startMarkerCord && (
+        {startMarkerCords && (
           <Marker
-            position={startMarkerCord}
+            position={startMarkerCords}
             draggable={true}
             onDragEnd={this.updateLatLng}
           ></Marker>
         )}
-        {finishMarkerCord && (
+        {goalMarkerCords && (
           <Marker
-            position={finishMarkerCord}
+            position={goalMarkerCords}
             draggable={true}
             onMove={this.updateLatLng}
           ></Marker>
