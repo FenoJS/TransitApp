@@ -10,10 +10,10 @@ class App extends Component {
     super(props);
     this.state = {
       mapPosition: [52.229675, 21.01223],
-      startDirectionStreet: '',
-      goalDirectionStreet: '',
-      startMarkerCords: null,
-      goalMarkerCords: null,
+      startDirection: '',
+      goalDirection: '',
+      startMarkerPos: null,
+      goalMarkerPos: null,
     };
   }
 
@@ -24,17 +24,50 @@ class App extends Component {
     });
   };
 
+  handleDirections = (direction, value) => {
+    this.setState({
+      [direction]: value,
+    });
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(
+      'did update',
+      prevState.startMarkerPos,
+      this.state.startMarkerPos
+    );
+    if (
+      JSON.stringify(prevState.startMarkerPos) !==
+      JSON.stringify(this.state.startMarkerPos)
+    ) {
+      console.log('test');
+      this.setState({
+        startDirection: 'test street name',
+      });
+    }
+    if (prevState.startDirection !== this.state.startDirection) {
+      console.log('test');
+      this.setState({
+        startMarkerPos: { lat: 52.23274103614767, lng: 20.991783142084847 },
+      });
+    }
+  }
+
   render() {
+    console.log('render App');
     return (
       <>
         <Header />
         <Map
           mapPosition={this.state.mapPosition}
           handleMarkersCords={this.handleMarkersCords}
-          startMarkerCords={this.state.startMarkerCords}
-          goalMarkerCords={this.state.goalMarkerCords}
+          startMarkerPos={this.state.startMarkerPos}
+          goalMarkerPos={this.state.goalMarkerPos}
         />
-        <RoutingPanel />
+        <RoutingPanel
+          handleDirections={this.handleDirections}
+          startDirection={this.state.startDirection}
+        />
       </>
     );
   }

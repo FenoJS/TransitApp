@@ -3,10 +3,13 @@ import RoutingForm from './RoutingForm';
 
 import styles from './RoutingPanel.module.css';
 
-const RoutingPanel = () => {
+const RoutingPanel = props => {
   return (
     <div className={styles.panel}>
-      <RoutingForm />
+      <RoutingForm
+        handleDirections={props.handleDirections}
+        startDirection={props.startDirection}
+      />
     </div>
   );
 };
