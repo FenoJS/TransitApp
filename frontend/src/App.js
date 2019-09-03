@@ -3,6 +3,8 @@ import Map from './Map';
 import Header from './Header';
 import RoutingPanel from './RoutingPanel';
 
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
 //import styles from './App.module.css';
 
 class App extends Component {
@@ -30,25 +32,47 @@ class App extends Component {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  getAddressFromGeocode = async geocode => {
+    const provider = new OpenStreetMapProvider({
+      params: {
+        addressdetails: 1,
+      },
+    });
+    const { lat, lng } = geocode;
+    const results = await provider.search({
+      query: [lat, lng],
+    });
     console.log(
-      'did update',
-      prevState.startMarkerPos,
-      this.state.startMarkerPos
+      results[0].raw.address.road,
+      results[0].raw.address.house_number
     );
-    if (
-      JSON.stringify(prevState.startMarkerPos) !==
-      JSON.stringify(this.state.startMarkerPos)
-    ) {
+
+    return results[0].raw.address.road;
+    //console.log(results);
+  };
+
+  async componentDidUpdate(prevProps, prevState) {
+    // console.log(
+    //   'did update',
+    //   prevState.startMarkerPos,
+    //   this.state.startMarkerPos
+    // );
+    // if (
+    //   JSON.stringify(prevState.startMarkerPos) !==
+    //   JSON.stringify(this.state.startMarkerPos)
+    // ) {
+    //   console.log('test');
+    //   this.setState({
+    //     startDirection: 'test street name',
+    //   });
+    // }
+    if (prevState.startMarkerPos !== this.state.startMarkerPos) {
       console.log('test');
-      this.setState({
-        startDirection: 'test street name',
-      });
-    }
-    if (prevState.startDirection !== this.state.startDirection) {
-      console.log('test');
-      this.setState({
-        startMarkerPos: { lat: 52.23274103614767, lng: 20.991783142084847 },
+      const address = await this.getAddressFromGeocode(
+        this.state.startMarkerPos
+      );
+      await this.setState({
+        startDirection: address,
       });
     }
   }

@@ -4,11 +4,13 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch';
 class RoutingForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { value: '' };
+    this.state = { startDirection: '', goalDirection: '' };
   }
+  // e =>
+  // this.props.handleDirections(e.target.name, e.target.value)
 
   handleChange = e => {
-    this.setState({ value: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
     console.log(e.target);
   };
 
@@ -16,10 +18,16 @@ class RoutingForm extends Component {
     e.preventDefault();
     const provider = new OpenStreetMapProvider();
     const results = await provider.search({
-      query: `${this.state.value} ${'Warszawa, Mazowieckie'}`,
+      query: `${this.state.startDirection} ${'Warszawa, Mazowieckie'}`,
     });
     console.log(results);
   };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.startDirection !== prevProps.startDirection) {
+      this.setState({ startDirection: this.props.startDirection });
+    }
+  }
 
   render() {
     console.log('render Form');
@@ -29,10 +37,8 @@ class RoutingForm extends Component {
           <input
             type="text"
             placeholder="Punk początkowy..."
-            value={this.props.startDirection}
-            onChange={e =>
-              this.props.handleDirections(e.target.name, e.target.value)
-            }
+            value={this.state.startDirection}
+            onChange={this.handleChange}
             name="startDirection"
           />
         </label>
@@ -40,7 +46,7 @@ class RoutingForm extends Component {
           <input
             type="text"
             placeholder="Punk docelowy..."
-            value={this.state.value}
+            value={this.state.goalDirection}
             onChange={this.handleChange}
             name="goalDirection"
           />
