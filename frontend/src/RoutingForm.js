@@ -24,8 +24,21 @@ class RoutingForm extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (this.props.startDirection !== prevProps.startDirection) {
-      this.setState({ startDirection: this.props.startDirection });
+    const { startDirection, goalDirection } = this.props;
+    // if (this.props.startDirection !== prevProps.startDirection) {
+    //   this.setState({ startDirection: this.props.startDirection });
+    // }
+    // if (this.props.goalDirection !== prevProps.goalDirection) {
+    //   this.setState({ goalDirection: this.props.goalDirection });
+    // }
+    if (
+      startDirection !== prevProps.startDirection ||
+      goalDirection !== prevProps.goalDirection
+    ) {
+      this.setState({
+        startDirection,
+        goalDirection,
+      });
     }
   }
 

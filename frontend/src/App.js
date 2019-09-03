@@ -19,16 +19,17 @@ class App extends Component {
     };
   }
 
-  handleMarkersCords = (marker, cords) => {
-    console.log('get cords', marker, cords);
-    this.setState({
-      [marker]: cords,
-    });
-  };
+  componentDidUpdate(prevProps, prevState) {}
 
-  handleDirections = (direction, value) => {
-    this.setState({
-      [direction]: value,
+  handleMarkersCords = async (marker, cords) => {
+    const address = await this.getAddressFromGeocode(cords);
+    const directionToUpdate = {
+      startMarkerPos: 'startDirection',
+      goalMarkerPos: 'goalDirection',
+    };
+    await this.setState({
+      [marker]: cords,
+      [directionToUpdate[marker]]: address,
     });
   };
 
@@ -42,40 +43,22 @@ class App extends Component {
     const results = await provider.search({
       query: [lat, lng],
     });
-    console.log(
-      results[0].raw.address.road,
-      results[0].raw.address.house_number
-    );
 
-    return results[0].raw.address.road;
-    //console.log(results);
+    const { address, lat: lat_x, lon: lng_y } = results[0].raw;
+    const geoString = `${lat_x}, ${lng_y}`;
+
+    return `${address.road ? address.road : geoString} ${
+      address.house_number ? address.house_number : ''
+    }`;
   };
 
-  async componentDidUpdate(prevProps, prevState) {
-    // console.log(
-    //   'did update',
-    //   prevState.startMarkerPos,
-    //   this.state.startMarkerPos
-    // );
-    // if (
-    //   JSON.stringify(prevState.startMarkerPos) !==
-    //   JSON.stringify(this.state.startMarkerPos)
-    // ) {
-    //   console.log('test');
-    //   this.setState({
-    //     startDirection: 'test street name',
-    //   });
-    // }
-    if (prevState.startMarkerPos !== this.state.startMarkerPos) {
-      console.log('test');
-      const address = await this.getAddressFromGeocode(
-        this.state.startMarkerPos
-      );
-      await this.setState({
-        startDirection: address,
-      });
-    }
-  }
+  handleDirections = (direction, value) => {
+    this.setState({
+      [direction]: value,
+    });
+  };
+
+  getMarkerFromAddress = address => {};
 
   render() {
     console.log('render App');
@@ -91,6 +74,7 @@ class App extends Component {
         <RoutingPanel
           handleDirections={this.handleDirections}
           startDirection={this.state.startDirection}
+          goalDirection={this.state.goalDirection}
         />
       </>
     );

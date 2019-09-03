@@ -9,6 +9,7 @@ const RoutingPanel = props => {
       <RoutingForm
         handleDirections={props.handleDirections}
         startDirection={props.startDirection}
+        goalDirection={props.goalDirection}
       />
     </div>
   );
