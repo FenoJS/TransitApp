@@ -7,7 +7,7 @@ const RoutingPanel = props => {
   return (
     <div className={styles.panel}>
       <RoutingForm
-        handleDirections={props.handleDirections}
+        getMarkerFromAddress={props.getMarkerFromAddress}
         startDirection={props.startDirection}
         goalDirection={props.goalDirection}
       />

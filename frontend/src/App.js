@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import Map from './Map';
 import Header from './Header';
 import RoutingPanel from './RoutingPanel';
-
-import { OpenStreetMapProvider } from 'leaflet-geosearch';
 
 //import styles from './App.module.css';
 
@@ -47,18 +46,29 @@ class App extends Component {
     const { address, lat: lat_x, lon: lng_y } = results[0].raw;
     const geoString = `${lat_x}, ${lng_y}`;
 
+    // if there is no address show geocode
     return `${address.road ? address.road : geoString} ${
       address.house_number ? address.house_number : ''
     }`;
   };
 
-  handleDirections = (direction, value) => {
+  getMarkerFromAddress = async (address, direction) => {
+    const provider = new OpenStreetMapProvider({
+      params: {
+        addressdetails: 1,
+      },
+    });
+    const results = await provider.search({
+      query: `${address} ${'Warszawa, Mazowieckie'}`,
+    });
+    const markerToUpdate = {
+      startDirection: 'startMarkerPos',
+      goalDirection: 'goalMarkerPos',
+    };
     this.setState({
-      [direction]: value,
+      [markerToUpdate[direction]]: [results[0].y, results[0].x],
     });
   };
-
-  getMarkerFromAddress = address => {};
 
   render() {
     console.log('render App');
@@ -72,7 +82,7 @@ class App extends Component {
           goalMarkerPos={this.state.goalMarkerPos}
         />
         <RoutingPanel
-          handleDirections={this.handleDirections}
+          getMarkerFromAddress={this.getMarkerFromAddress}
           startDirection={this.state.startDirection}
           goalDirection={this.state.goalDirection}
         />
