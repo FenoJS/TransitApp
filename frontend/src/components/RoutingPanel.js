@@ -12,6 +12,7 @@ const RoutingPanel = props => {
         goalDirection={props.goalDirection}
         startMarkerIcon={props.startMarkerIcon}
         goalMarkerIcon={props.goalMarkerIcon}
+        handleRouteSubmit={props.handleRouteSubmit}
       />
     </div>
   );

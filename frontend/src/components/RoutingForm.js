@@ -29,13 +29,9 @@ class RoutingForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = async e => {
-    console.log('submit');
+  handleSubmit = e => {
     e.preventDefault();
-    const data = await fetch(
-      'http://localhost:8080/otp/routers/default/plan?fromPlace=52.27315,21.06302&toPlace=52.25513,21.03436&date=2019-08-26&time=12:00'
-    ).then(res => res.json());
-    console.log(data.plan.itineraries);
+    this.props.handleRouteSubmit();
   };
 
   handleKeyPress = e => {
@@ -47,7 +43,7 @@ class RoutingForm extends Component {
   };
 
   render() {
-    console.log('render Form');
+    console.log('render Form', this.props);
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
         <div className={styles.inputWrapper}>

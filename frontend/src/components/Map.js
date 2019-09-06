@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
+import polyUtil from 'polyline-encoded';
+
 import { Map as MapContainer } from 'react-leaflet';
-import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
+import { Marker, Popup, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
 
 import styles from './Map.module.scss';
 import './customPopup.css';
@@ -49,6 +51,24 @@ class Map extends Component {
     this.props.handleMarkersCords(marker, e.target._latlng);
   };
 
+  renderPolylines = polylines => {
+    const colors = ['gray', '#73c94e', 'blue'];
+    const poly = polylines.map((polyline, i) => {
+      return (
+        <Polyline
+          positions={polyUtil.decode(polyline)}
+          color={colors[i]}
+          weight={5}
+        />
+      );
+    });
+    console.log(poly);
+    // this.setState({
+    //   polylines: true,
+    // });
+    return poly;
+  };
+
   render() {
     console.log('render Map', this.state, this.props);
     const { isPopup, popupCords } = this.state;
@@ -70,7 +90,7 @@ class Map extends Component {
       >
         <ZoomControl position="topright" />
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png',
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (
@@ -115,6 +135,7 @@ class Map extends Component {
             onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}
           />
         )}
+        {this.props.polylines && this.renderPolylines(this.props.polylines)}
       </MapContainer>
     );
   }
