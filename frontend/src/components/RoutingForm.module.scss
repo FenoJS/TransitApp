@@ -1,0 +1,21 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputWrapper {
+  display: flex;
+  background-color: #fff;
+  margin-bottom: 0.5rem;
+}
+.inputImg {
+  height: 5rem;
+  width: 5rem;
+  padding: 1rem;
+}
+input {
+  flex: 1;
+  font-size: 2rem;
+  padding: 1rem;
+  border: none;
+}

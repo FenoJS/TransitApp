@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
-import Map from './Map';
-import Header from './Header';
-import RoutingPanel from './RoutingPanel';
+import Map from './components/Map';
+import Header from './components/Header';
+import RoutingPanel from './components/RoutingPanel';
 
-//import styles from './App.module.css';
+import startMarkerIcon from './assets/images/marker-blue.png';
+import goalMarkerIcon from './assets/images/marker-red.png';
+import './App.module.scss';
 
 class App extends Component {
   constructor(props) {
@@ -67,6 +69,7 @@ class App extends Component {
     };
     this.setState({
       [markerToUpdate[direction]]: [results[0].y, results[0].x],
+      [direction]: address,
     });
   };
 
@@ -80,11 +83,15 @@ class App extends Component {
           handleMarkersCords={this.handleMarkersCords}
           startMarkerPos={this.state.startMarkerPos}
           goalMarkerPos={this.state.goalMarkerPos}
+          startMarkerIcon={startMarkerIcon}
+          goalMarkerIcon={goalMarkerIcon}
         />
         <RoutingPanel
           getMarkerFromAddress={this.getMarkerFromAddress}
           startDirection={this.state.startDirection}
           goalDirection={this.state.goalDirection}
+          startMarkerIcon={startMarkerIcon}
+          goalMarkerIcon={goalMarkerIcon}
         />
       </>
     );

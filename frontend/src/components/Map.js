@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
+import L from 'leaflet';
 import { Map as MapContainer } from 'react-leaflet';
 import { Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
+
+import styles from './Map.module.scss';
+import './customPopup.css';
 
 const mapRootStyles = {
   height: 'calc(100vh - 70px)',
   width: '100%',
 };
+
+const markerIcon = icon =>
+  L.icon({
+    iconUrl: icon,
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+  });
 
 class Map extends Component {
   constructor(props) {
@@ -39,9 +50,15 @@ class Map extends Component {
   };
 
   render() {
-    console.log('render Map');
+    console.log('render Map', this.state, this.props);
     const { isPopup, popupCords } = this.state;
-    const { mapPosition, startMarkerPos, goalMarkerPos } = this.props;
+    const {
+      mapPosition,
+      startMarkerPos,
+      goalMarkerPos,
+      startMarkerIcon,
+      goalMarkerIcon,
+    } = this.props;
     return (
       <MapContainer
         center={mapPosition}
@@ -57,23 +74,34 @@ class Map extends Component {
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (
-          <Popup position={popupCords}>
+          <Popup
+            className={'custom'}
+            position={popupCords}
+            closeButton={false}
+            offset={{
+              x: 125,
+              y: 100,
+            }}
+          >
             <button
               type="button"
               onClick={() => this.addMarker('startMarkerPos', popupCords)}
             >
-              Ustaw lokalizację początkową
+              <img className={styles.buttonImg} src={startMarkerIcon} alt="" />
+              <span>Ustaw lokalizację początkową</span>
             </button>
             <button
               type="button"
               onClick={() => this.addMarker('goalMarkerPos', popupCords)}
             >
-              Ustaw lokalizację docelową
+              <img className={styles.buttonImg} src={goalMarkerIcon} alt="" />
+              <span>Ustaw lokalizację docelową</span>
             </button>
           </Popup>
         )}
         {startMarkerPos && (
           <Marker
+            icon={markerIcon(startMarkerIcon)}
             position={startMarkerPos}
             draggable
             onDragEnd={e => this.updateMarkerPos('startMarkerPos', e)}
@@ -81,6 +109,7 @@ class Map extends Component {
         )}
         {goalMarkerPos && (
           <Marker
+            icon={markerIcon(goalMarkerIcon)}
             position={goalMarkerPos}
             draggable
             onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}

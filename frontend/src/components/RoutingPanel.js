@@ -1,7 +1,7 @@
 import React from 'react';
 import RoutingForm from './RoutingForm';
 
-import styles from './RoutingPanel.module.css';
+import styles from './RoutingPanel.module.scss';
 
 const RoutingPanel = props => {
   return (
@@ -10,6 +10,8 @@ const RoutingPanel = props => {
         getMarkerFromAddress={props.getMarkerFromAddress}
         startDirection={props.startDirection}
         goalDirection={props.goalDirection}
+        startMarkerIcon={props.startMarkerIcon}
+        goalMarkerIcon={props.goalMarkerIcon}
       />
     </div>
   );

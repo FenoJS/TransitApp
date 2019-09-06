@@ -1,0 +1,19 @@
+button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  border: 0;
+  padding: 0;
+  background-color: #fff;
+  cursor: pointer;
+
+  &:nth-child(1) {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  }
+}
+
+.buttonImg {
+  width: 4rem;
+  height: 4rem;
+  padding: 0.5rem;
+}

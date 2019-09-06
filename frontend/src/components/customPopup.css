@@ -1,0 +1,12 @@
+.custom .leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
+
+.custom .leaflet-popup-content {
+  margin: 0;
+  width: 25rem;
+}
+
+.custom .leaflet-popup-tip-container {
+  display: none;
+}
