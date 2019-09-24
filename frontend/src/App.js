@@ -91,6 +91,13 @@ class App extends Component {
     });
   };
 
+  handleRouteToRender = routeNumber => {
+    console.log('update number');
+    this.setState({
+      routeToRender: routeNumber,
+    });
+  };
+
   render() {
     console.log('render App');
     return (
@@ -104,7 +111,7 @@ class App extends Component {
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
           route={
-            this.state.routes && this.state.routes[this.state.routeToRender]
+            this.state.routes && this.state.routes[this.state.routeToRender - 1]
           }
         />
         <RoutingPanel
@@ -115,6 +122,7 @@ class App extends Component {
           goalMarkerIcon={goalMarkerIcon}
           handleRouteSubmit={this.handleRouteSubmit}
           routes={this.state.routes}
+          handleRouteToRender={this.handleRouteToRender}
         />
       </>
     );

@@ -16,7 +16,12 @@ const RoutingPanel = props => {
         handleRouteSubmit={props.handleRouteSubmit}
       />
 
-      {props.routes && <RoutingDetails routes={props.routes}></RoutingDetails>}
+      {props.routes && (
+        <RoutingDetails
+          routes={props.routes}
+          handleRouteToRender={props.handleRouteToRender}
+        ></RoutingDetails>
+      )}
     </div>
   );
 };
