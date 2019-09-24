@@ -17,6 +17,7 @@ class App extends Component {
       goalDirection: '',
       startMarkerPos: null,
       goalMarkerPos: null,
+      routeToRender: 1,
     };
   }
 
@@ -42,16 +43,15 @@ class App extends Component {
     const data = await fetch(
       `http://localhost:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=12:00`
     ).then(res => res.json());
-    console.log(data.plan.itineraries);
-    const testPolylineData = data.plan.itineraries[0].legs.map(leg => {
-      return leg.legGeometry.points;
-    });
-    console.log(testPolylineData);
+
+    const routesData = data.plan.itineraries;
+    console.log('routesData', routesData);
     this.setState({
-      polylines: testPolylineData,
+      routes: routesData,
     });
   };
   // fromPlace=52.27315,21.06302&toPlace=52.25513,21.03436
+
   getAddressFromGeocode = async geocode => {
     const provider = new OpenStreetMapProvider({
       params: {
@@ -103,7 +103,9 @@ class App extends Component {
           goalMarkerPos={this.state.goalMarkerPos}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
-          polylines={this.state.polylines && this.state.polylines}
+          route={
+            this.state.routes && this.state.routes[this.state.routeToRender]
+          }
         />
         <RoutingPanel
           getMarkerFromAddress={this.getMarkerFromAddress}
@@ -112,6 +114,7 @@ class App extends Component {
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
           handleRouteSubmit={this.handleRouteSubmit}
+          routes={this.state.routes}
         />
       </>
     );

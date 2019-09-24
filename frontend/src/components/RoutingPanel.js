@@ -1,5 +1,6 @@
 import React from 'react';
 import RoutingForm from './RoutingForm';
+import RoutingDetails from './RoutingDetails';
 
 import styles from './RoutingPanel.module.scss';
 
@@ -14,6 +15,8 @@ const RoutingPanel = props => {
         goalMarkerIcon={props.goalMarkerIcon}
         handleRouteSubmit={props.handleRouteSubmit}
       />
+
+      {props.routes && <RoutingDetails routes={props.routes}></RoutingDetails>}
     </div>
   );
 };

@@ -51,8 +51,15 @@ class Map extends Component {
     this.props.handleMarkersCords(marker, e.target._latlng);
   };
 
+  getPolylines = route => {
+    const polylines = route.legs.map(leg => {
+      return leg.legGeometry.points;
+    });
+    return polylines;
+  };
+
   renderPolylines = polylines => {
-    const colors = ['gray', '#73c94e', 'blue'];
+    const colors = ['gray', '#73c94e', 'blue', 'red'];
     const poly = polylines.map((polyline, i) => {
       return (
         <Polyline
@@ -90,7 +97,7 @@ class Map extends Component {
       >
         <ZoomControl position="topright" />
         <TileLayer
-          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png',
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (
@@ -135,7 +142,8 @@ class Map extends Component {
             onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}
           />
         )}
-        {this.props.polylines && this.renderPolylines(this.props.polylines)}
+        {this.props.route &&
+          this.renderPolylines(this.getPolylines(this.props.route))}
       </MapContainer>
     );
   }
