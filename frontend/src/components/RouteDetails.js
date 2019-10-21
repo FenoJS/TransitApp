@@ -15,32 +15,24 @@ const RouteDetails = props => {
   const renderVehicles = route => {
     console.log(route);
     const vehicles = route.legs.map(leg => {
-      if (leg.mode === 'BUS') {
+      if (leg.mode !== 'WALK') {
+        const icons = {
+          bus: busIcon,
+          tram: tramIcon,
+          subway: subwayIcon,
+          rail: subwayIcon,
+        };
         return (
-          <div>
-            <img src={busIcon} alt="" />
-            {leg.route}
-          </div>
+          <>
+            <img
+              className={styles.vehicleImg}
+              src={icons[leg.mode.toLowerCase()]}
+              alt={leg.mode.toLowerCase()}
+            />
+            <span className={styles.vehicleNum}>{leg.route}</span>
+          </>
         );
       }
-      if (leg.mode === 'TRAM') {
-        return (
-          <div>
-            <img src={tramIcon} alt="" />
-            {leg.route}
-          </div>
-        );
-      }
-      if (leg.mode === 'SUBWAY') {
-        return (
-          <div>
-            <img src={subwayIcon} alt="" />
-            {leg.route}
-          </div>
-        );
-      }
-
-      return leg.mode !== 'WALK' && leg.route;
     });
     return vehicles;
   };
