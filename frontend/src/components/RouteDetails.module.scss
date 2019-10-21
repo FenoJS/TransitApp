@@ -1,6 +1,34 @@
-.route {
+.routeContainer {
   display: flex;
   flex: 1;
   font-size: 2rem;
   padding: 1rem;
+  min-height: 90px;
+  background-color: #fff;
+}
+
+.routeDepartureBox {
+  width: 100%;
+}
+
+.routeDetailsBox {
+  display: flex;
+}
+
+.routeDuration {
+  color: lightseagreen;
+}
+
+.vehicles {
+  display: flex;
+}
+
+.vehicleImg {
+  height: 32px;
+  width: 32px;
+}
+
+.vehicleNum {
+  color: #fff;
+  background: green;
 }

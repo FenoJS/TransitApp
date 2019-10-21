@@ -55,6 +55,7 @@ class Map extends Component {
     const polylines = route.legs.map(leg => {
       return leg.legGeometry.points;
     });
+    console.log(polylines);
     return polylines;
   };
 
