@@ -1,18 +1,45 @@
 .routeContainer {
   display: flex;
-  flex: 1;
-  font-size: 2rem;
-  padding: 1rem;
-  min-height: 90px;
-  background-color: #fff;
-}
-
-.routeDepartureBox {
+  font-size: 1.5rem;
   width: 100%;
+  height: 90px;
+  border-bottom: 1px solid #d6d6d6;
+
+  &:hover {
+    //border-left: 3px solid blueviolet;
+    transform: translateX(3px);
+    background-color: #c0dfff;
+  }
+
+  &:hover::before {
+    content: '';
+    position: absolute;
+    width: 3px;
+    left: -3px;
+    height: 100%;
+    background-color: #6ba0d3;
+  }
 }
 
-.routeDetailsBox {
+.routeDeparture {
   display: flex;
+  flex-wrap: wrap;
+  width: 30%;
+  padding: 1rem;
+  border-right: 1px solid #d6d6d6;
+}
+
+.routeDetailsWrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+.routeDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
 
 .routeDuration {
@@ -21,14 +48,61 @@
 
 .vehicles {
   display: flex;
+  align-items: center;
 }
 
 .vehicleImg {
-  height: 32px;
-  width: 32px;
+  height: 2rem;
+  width: 2rem;
 }
 
 .vehicleNum {
+  color: #000;
+  background: white;
+  padding: 0 5px;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.7);
+  margin-left: 0.5rem;
+  margin-right: 1rem;
+}
+
+.departureTime {
+  color: #545454;
+}
+
+.departureDetails {
+  display: flex;
+  padding: 1rem;
+  font-size: 1.3rem;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #fff;
+  border-top: 1px solid #e8e3e3;
+}
+
+.travelTime {
+  color: #302e40;
+}
+
+.travelStartTime {
+  padding: 0 0.5rem;
   color: #fff;
-  background: green;
+  background-color: #6fa7de;
+  border-radius: 4px;
+  line-height: 2rem;
+}
+
+.travelEndTime {
+  padding: 0 0.5rem;
+  color: #fff;
+  background-color: #f48a8b;
+  border-radius: 4px;
+  line-height: 2rem;
+}
+
+.pedestrianImg {
+  width: 1.2rem;
+  height: 1.2rem;
 }
