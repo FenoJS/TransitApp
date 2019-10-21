@@ -15,49 +15,32 @@ const RouteDetails = props => {
   const renderVehicles = route => {
     console.log(route);
     const vehicles = route.legs.map(leg => {
-      // if (leg.mode === 'BUS') {
-      //   return (
-      //     <div>
-      //       <img src={busIcon} alt="" />
-      //       {leg.route}
-      //     </div>
-      //   );
-      // }
-      // if (leg.mode === 'TRAM') {
-      //   return (
-      //     <div>
-      //       <img src={tramIcon} alt="" />
-      //       {leg.route}
-      //     </div>
-      //   );
-      // }
-      // if (leg.mode === 'SUBWAY') {
-      //   return (
-      //     <div>
-      //       <img src={subwayIcon} alt="" />
-      //       {leg.route}
-      //     </div>
-      //   );
-      // }
-      if (leg.mode !== 'WALK') {
-        const icons = {
-          bus: busIcon,
-          tram: tramIcon,
-          subway: subwayIcon,
-          rail: subwayIcon,
-        };
+      if (leg.mode === 'BUS') {
         return (
-          <>
-            <img
-              className={styles.vehicleImg}
-              src={icons[leg.mode.toLowerCase()]}
-              alt={leg.mode.toLowerCase()}
-            />
-            <span className={styles.vehicleNum}>{leg.route}</span>
-          </>
+          <div>
+            <img src={busIcon} alt="" />
+            {leg.route}
+          </div>
         );
       }
-      // return leg.mode !== 'WALK' && leg.route;
+      if (leg.mode === 'TRAM') {
+        return (
+          <div>
+            <img src={tramIcon} alt="" />
+            {leg.route}
+          </div>
+        );
+      }
+      if (leg.mode === 'SUBWAY') {
+        return (
+          <div>
+            <img src={subwayIcon} alt="" />
+            {leg.route}
+          </div>
+        );
+      }
+
+      return leg.mode !== 'WALK' && leg.route;
     });
     return vehicles;
   };
