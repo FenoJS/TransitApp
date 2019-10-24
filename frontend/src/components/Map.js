@@ -56,22 +56,38 @@ class Map extends Component {
     this.props.handleMarkersCords(marker, e.target._latlng);
   };
 
-  getPolylines = route => {
-    const polylines = route.legs.map(leg => {
-      return leg.legGeometry.points;
-    });
-    console.log(polylines);
-    return polylines;
-  };
+  // getPolylines = route => {
+  //   const polylines = route.legs.map(leg => {
+  //     console.log(leg);
+  //     return leg.legGeometry.points;
+  //   });
+  //   console.log(polylines);
+  //   return polylines;
+  // };
 
-  renderPolylines = polylines => {
-    const colors = ['gray', '#73c94e', 'blue', 'red'];
-    const poly = polylines.map((polyline, i) => {
+  renderPolylines = route => {
+    const colors = ['#6fa7de', '#f48a8b', '#89cc6c', '#d21d7a'];
+    let j = 0;
+    let color;
+    let dash;
+    const poly = route.legs.map((leg, i) => {
+      console.log(leg.mode !== 'WALK');
+      if (leg.mode !== 'WALK') {
+        color = colors[j];
+        j++;
+      }
+      if (leg.mode === 'WALK') {
+        color = 'gray';
+      }
+
+      console.log(j);
       return (
         <Polyline
-          positions={polyUtil.decode(polyline)}
-          color={colors[i]}
+          positions={polyUtil.decode(leg.legGeometry.points)}
+          color={color}
           weight={5}
+          dashArray={leg.mode === 'WALK' && (5, 10)}
+          key={Date.now() / 1000 + i}
         />
       );
     });
@@ -168,7 +184,7 @@ class Map extends Component {
             onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}
           />
         )}
-        {route && this.renderPolylines(this.getPolylines(route))}
+        {route && this.renderPolylines(route)}
         {route && this.renderVehiclesMarkers(route)}
       </MapContainer>
     );
