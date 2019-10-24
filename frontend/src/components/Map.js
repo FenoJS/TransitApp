@@ -6,6 +6,10 @@ import { Map as MapContainer } from 'react-leaflet';
 import { Marker, Popup, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
 import { divIcon } from 'leaflet';
 
+import busIcon from '../assets/images/bus.png';
+import tramIcon from '../assets/images/tram.png';
+import subwayIcon from '../assets/images/subway.png';
+
 import styles from './Map.module.scss';
 import './customPopup.css';
 
@@ -77,9 +81,18 @@ class Map extends Component {
   renderVehiclesMarkers = route => {
     const markers = route.legs.map(leg => {
       if (leg.mode !== 'WALK') {
+        const img = {
+          bus: busIcon,
+          tram: tramIcon,
+          subway: subwayIcon,
+          rail: subwayIcon,
+        };
         const icon = divIcon({
           className: '',
-          html: `<div class=${styles.vehicleNumMarker}>${leg.route}</div>`,
+          html: `<div class=${styles.markerContainer}><img src=${
+            img[leg.mode.toLowerCase()]
+          } class=${styles.vehicleImg} alt=""/>
+          <span class=${styles.vehicleNum}>${leg.route}</span></div>`,
         });
         return <Marker position={[leg.from.lat, leg.from.lon]} icon={icon} />;
       }
@@ -99,19 +112,6 @@ class Map extends Component {
       route,
     } = this.props;
 
-    // const icon = divIcon({
-    //   className: '',
-    //   html: `<div class=${styles.vehicleNumMarker}>${route &&
-    //     route.legs[1].route}</div>`,
-    // });
-
-    // const marker = route && (
-    //   <Marker
-    //     position={[route.legs[1].from.lat, route.legs[1].from.lon]}
-    //     icon={icon}
-    //   />
-    // );
-
     return (
       <MapContainer
         center={mapPosition}
@@ -123,7 +123,7 @@ class Map extends Component {
       >
         <ZoomControl position="topright" />
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (

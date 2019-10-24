@@ -18,14 +18,25 @@ button {
   padding: 0.5rem;
 }
 
-.vehicleNumMarker {
+.markerContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
   width: 7rem;
   background-color: #fff;
-  font-size: 1.5rem;
-  text-align: center;
   border-radius: 6px;
   padding: 2px;
   box-shadow: 2px 3px 6px 0px #00000099;
   margin-top: 15px;
   margin-left: -22px;
+}
+
+.vehicleImg {
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.vehicleNum {
+  font-size: 1.5rem;
+  text-align: center;
 }
