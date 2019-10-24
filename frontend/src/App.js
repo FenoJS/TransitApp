@@ -41,7 +41,7 @@ class App extends Component {
     const goalCords = this.state.goalMarkerPos;
     console.log(startCords, goalCords);
     const data = await fetch(
-      `http://localhost:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=12:00`
+      `http://localhost:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26`
     ).then(res => res.json());
 
     const routesData = data.plan.itineraries;

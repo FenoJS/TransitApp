@@ -4,6 +4,7 @@ import polyUtil from 'polyline-encoded';
 
 import { Map as MapContainer } from 'react-leaflet';
 import { Marker, Popup, TileLayer, ZoomControl, Polyline } from 'react-leaflet';
+import { divIcon } from 'leaflet';
 
 import styles from './Map.module.scss';
 import './customPopup.css';
@@ -70,11 +71,20 @@ class Map extends Component {
         />
       );
     });
-    console.log(poly);
-    // this.setState({
-    //   polylines: true,
-    // });
     return poly;
+  };
+
+  renderVehiclesMarkers = route => {
+    const markers = route.legs.map(leg => {
+      if (leg.mode !== 'WALK') {
+        const icon = divIcon({
+          className: '',
+          html: `<div class=${styles.vehicleNumMarker}>${leg.route}</div>`,
+        });
+        return <Marker position={[leg.from.lat, leg.from.lon]} icon={icon} />;
+      }
+    });
+    return markers;
   };
 
   render() {
@@ -86,7 +96,22 @@ class Map extends Component {
       goalMarkerPos,
       startMarkerIcon,
       goalMarkerIcon,
+      route,
     } = this.props;
+
+    // const icon = divIcon({
+    //   className: '',
+    //   html: `<div class=${styles.vehicleNumMarker}>${route &&
+    //     route.legs[1].route}</div>`,
+    // });
+
+    // const marker = route && (
+    //   <Marker
+    //     position={[route.legs[1].from.lat, route.legs[1].from.lon]}
+    //     icon={icon}
+    //   />
+    // );
+
     return (
       <MapContainer
         center={mapPosition}
@@ -103,7 +128,7 @@ class Map extends Component {
         />
         {isPopup && (
           <Popup
-            className={'custom'}
+            className={'markersPopup'}
             position={popupCords}
             closeButton={false}
             offset={{
@@ -143,8 +168,8 @@ class Map extends Component {
             onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}
           />
         )}
-        {this.props.route &&
-          this.renderPolylines(this.getPolylines(this.props.route))}
+        {route && this.renderPolylines(this.getPolylines(route))}
+        {route && this.renderVehiclesMarkers(route)}
       </MapContainer>
     );
   }

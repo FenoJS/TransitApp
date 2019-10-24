@@ -14,11 +14,11 @@ const RouteDetails = props => {
 
   const renderLeaveTime = () => {
     const walkDuration = props.route.legs[0].duration;
+    const departureTime = props.route.legs[1].startTime;
     const now = Date.now();
     console.log(now, walkDuration);
-    const time = new Date(now - walkDuration * 1000).toLocaleTimeString(
-      'en-US'
-    );
+    const time =
+      new Date(departureTime - now).getMinutes() - Math.ceil(walkDuration / 60);
     return time;
   };
 
@@ -53,7 +53,7 @@ const RouteDetails = props => {
     >
       <div className={styles.routeDeparture}>
         <span>Wyjdź za: </span>
-        <div className={styles.departureTime}>{renderLeaveTime()}</div>
+        <div className={styles.departureTime}>{renderLeaveTime()} min</div>
       </div>
       <div className={styles.routeDetailsWrapper}>
         <div className={styles.routeDetails}>

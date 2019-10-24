@@ -1,12 +1,25 @@
-.custom .leaflet-popup-content-wrapper {
+.markersPopup .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
 
-.custom .leaflet-popup-content {
+.markersPopup .leaflet-popup-content {
   margin: 0;
   width: 25rem;
 }
 
-.custom .leaflet-popup-tip-container {
+.markersPopup .leaflet-popup-tip-container {
   display: none;
 }
+
+/* .vehicleNumMarker .leaflet-popup-content-wrapper {
+  border-radius: 10px;
+}
+
+.vehicleNumMarker .leaflet-popup-content {
+  margin: 0;
+  width: 7rem;
+}
+
+.vehicleNumMarker .leaflet-popup-tip-container {
+  display: none;
+} */
