@@ -78,7 +78,11 @@ class RoutingForm extends Component {
         </div>
         <div className={styles.inputWrapper}>
           <img src={submitIcon} alt="" className={styles.inputImg} />
-          <input type="submit" value="Szukaj Połączenia" />
+          <input
+            type="submit"
+            className={styles.submit}
+            value="Szukaj Połączenia"
+          />
         </div>
       </form>
     );

@@ -1,23 +1,25 @@
-import React, { Component } from "react";
-import { OpenStreetMapProvider } from "leaflet-geosearch";
-import Map from "./components/Map";
-import Header from "./components/Header";
-import RoutingPanel from "./components/RoutingPanel";
+import React, { Component } from 'react';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import Map from './components/Map';
+import Header from './components/Header';
+import RoutingPanel from './components/RoutingPanel';
+import LoadingScreen from './components/LoadingScreen';
 
-import startMarkerIcon from "./assets/images/marker-blue.png";
-import goalMarkerIcon from "./assets/images/marker-red.png";
-import "./App.module.scss";
+import startMarkerIcon from './assets/images/marker-blue.png';
+import goalMarkerIcon from './assets/images/marker-red.png';
+import './App.module.scss';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isLoading: false,
       mapPosition: [52.229675, 21.01223],
-      startDirection: "",
-      goalDirection: "",
+      startDirection: '',
+      goalDirection: '',
       startMarkerPos: null,
       goalMarkerPos: null,
-      routeToRender: 1
+      routeToRender: 1,
     };
   }
 
@@ -26,28 +28,32 @@ class App extends Component {
   handleMarkersCords = async (marker, cords) => {
     const address = await this.getAddressFromGeocode(cords);
     const directionToUpdate = {
-      startMarkerPos: "startDirection",
-      goalMarkerPos: "goalDirection"
+      startMarkerPos: 'startDirection',
+      goalMarkerPos: 'goalDirection',
     };
     await this.setState({
       [marker]: cords,
-      [directionToUpdate[marker]]: address
+      [directionToUpdate[marker]]: address,
     });
   };
 
   handleRouteSubmit = async () => {
-    console.log("submited");
+    console.log('submited');
     const startCords = this.state.startMarkerPos;
     const goalCords = this.state.goalMarkerPos;
     console.log(startCords, goalCords);
+    this.setState({
+      isLoading: true,
+    });
     const data = await fetch(
       `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26`
     ).then(res => res.json());
 
-    const routesData = data.plan.itineraries;
-    console.log("routesData", routesData);
-    this.setState({
-      routes: routesData
+    const routesData = await data.plan.itineraries;
+    console.log('routesData', routesData);
+    await this.setState({
+      routes: routesData,
+      isLoading: false,
     });
   };
   // fromPlace=52.27315,21.06302&toPlace=52.25513,21.03436
@@ -55,12 +61,12 @@ class App extends Component {
   getAddressFromGeocode = async geocode => {
     const provider = new OpenStreetMapProvider({
       params: {
-        addressdetails: 1
-      }
+        addressdetails: 1,
+      },
     });
     const { lat, lng } = geocode;
     const results = await provider.search({
-      query: [lat, lng]
+      query: [lat, lng],
     });
 
     const { address, lat: lat_x, lon: lng_y } = results[0].raw;
@@ -68,41 +74,42 @@ class App extends Component {
 
     // if there is no address show geocode
     return `${address.road ? address.road : geoString} ${
-      address.house_number ? address.house_number : ""
+      address.house_number ? address.house_number : ''
     }`;
   };
 
   getMarkerFromAddress = async (address, direction) => {
     const provider = new OpenStreetMapProvider({
       params: {
-        addressdetails: 1
-      }
+        addressdetails: 1,
+      },
     });
     const results = await provider.search({
-      query: `${address} ${"Warszawa, Mazowieckie"}`
+      query: `${address} ${'Warszawa, Mazowieckie'}`,
     });
     const markerToUpdate = {
-      startDirection: "startMarkerPos",
-      goalDirection: "goalMarkerPos"
+      startDirection: 'startMarkerPos',
+      goalDirection: 'goalMarkerPos',
     };
     this.setState({
       [markerToUpdate[direction]]: [results[0].y, results[0].x],
-      [direction]: address
+      [direction]: address,
     });
   };
 
   handleRouteToRender = routeNumber => {
-    console.log("update number");
+    console.log('update number');
     this.setState({
-      routeToRender: routeNumber
+      routeToRender: routeNumber,
     });
   };
 
   render() {
-    console.log("render App");
+    console.log('render App');
     return (
       <>
         <Header />
+        {this.state.isLoading && <LoadingScreen />}
         <Map
           mapPosition={this.state.mapPosition}
           handleMarkersCords={this.handleMarkersCords}

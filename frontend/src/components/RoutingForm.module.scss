@@ -5,7 +5,7 @@
 
 .inputWrapper {
   display: flex;
-  background-color: #fff;
+  background-color: #fdf9f9;
   margin-bottom: 0.5rem;
   box-shadow: 1px 2px 5px 0px #909090;
 }
@@ -13,6 +13,11 @@
   height: 5rem;
   width: 5rem;
   padding: 1rem;
+}
+
+.submit {
+  color: #fff;
+  background-color: #2196f3;
 }
 input {
   flex: 1;

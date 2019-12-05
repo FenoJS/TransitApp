@@ -139,7 +139,7 @@ class Map extends Component {
       >
         <ZoomControl position="topright" />
         <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
+          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
           attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (
