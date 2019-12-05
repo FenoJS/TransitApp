@@ -128,6 +128,9 @@ class Map extends Component {
       route,
     } = this.props;
 
+    const bounds = L.latLngBounds([startMarkerPos, goalMarkerPos]);
+    const boundsZoomedOut = startMarkerPos && bounds.pad(0.5);
+
     return (
       <MapContainer
         center={mapPosition}
@@ -136,6 +139,7 @@ class Map extends Component {
         zoomControl={false}
         onClick={this.togglePopup}
         onContextMenu={this.togglePopup}
+        bounds={startMarkerPos && goalMarkerPos && boundsZoomedOut}
       >
         <ZoomControl position="topright" />
         <TileLayer
