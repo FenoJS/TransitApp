@@ -52,8 +52,8 @@ class Map extends Component {
     this.props.handleMarkersCords(marker, cordsFromPopup);
   };
 
-  updateMarkerPos = (marker, e) => {
-    this.props.handleMarkersCords(marker, e.target._latlng);
+  updateDraggedMarkerPos = (marker, e) => {
+    this.props.handleMarkersCords(marker, e.target._latlng, true);
   };
 
   // getPolylines = route => {
@@ -177,7 +177,7 @@ class Map extends Component {
             icon={markerIcon(startMarkerIcon)}
             position={startMarkerPos}
             draggable
-            onDragEnd={e => this.updateMarkerPos('startMarkerPos', e)}
+            onDragEnd={e => this.updateDraggedMarkerPos('startMarkerPos', e)}
           />
         )}
         {goalMarkerPos && (
@@ -185,7 +185,7 @@ class Map extends Component {
             icon={markerIcon(goalMarkerIcon)}
             position={goalMarkerPos}
             draggable
-            onDragEnd={e => this.updateMarkerPos('goalMarkerPos', e)}
+            onDragEnd={e => this.updateDraggedMarkerPos('goalMarkerPos', e)}
           />
         )}
         {route && this.renderPolylines(route)}

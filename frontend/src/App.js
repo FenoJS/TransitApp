@@ -25,7 +25,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {}
 
-  handleMarkersCords = async (marker, cords) => {
+  handleMarkersCords = async (marker, cords, dragged) => {
     const address = await this.getAddressFromGeocode(cords);
     const directionToUpdate = {
       startMarkerPos: 'startDirection',
@@ -35,6 +35,10 @@ class App extends Component {
       [marker]: cords,
       [directionToUpdate[marker]]: address,
     });
+
+    if (dragged) {
+      await this.handleRouteSubmit();
+    }
   };
 
   handleRouteSubmit = async () => {
@@ -117,6 +121,7 @@ class App extends Component {
           goalMarkerPos={this.state.goalMarkerPos}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
+          handleRouteSubmit={this.handleRouteSubmit}
           route={
             this.state.routes && this.state.routes[this.state.routeToRender - 1]
           }
