@@ -1,13 +1,15 @@
 import React from 'react';
 
+import logo from '../assets/images/logo.png';
+import styles from './Header.module.scss';
+
 const Header = () => {
-  const style = {
-    height: '70px',
-    width: '100%',
-    backgroundColor: 'black',
-    color: '#fff',
-  };
-  return <div style={style}>WARSZAWA</div>;
+  return (
+    <div className={styles.header}>
+      <img src={logo} alt="logo" className={styles.logo} />
+      <nav className="nav"></nav>
+    </div>
+  );
 };
 
 export default Header;
