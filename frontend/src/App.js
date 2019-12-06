@@ -137,6 +137,7 @@ class App extends Component {
           handleRouteSubmit={this.handleRouteSubmit}
           routes={this.state.routes}
           handleRouteToRender={this.handleRouteToRender}
+          isLoading={this.state.isLoading}
         />
       </>
     );

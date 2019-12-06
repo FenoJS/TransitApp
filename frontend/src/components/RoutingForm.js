@@ -82,6 +82,7 @@ class RoutingForm extends Component {
             type="submit"
             className={styles.submit}
             value="Szukaj Połączenia"
+            disabled={this.props.isLoading}
           />
         </div>
       </form>

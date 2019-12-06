@@ -14,6 +14,7 @@ const RoutingPanel = props => {
         startMarkerIcon={props.startMarkerIcon}
         goalMarkerIcon={props.goalMarkerIcon}
         handleRouteSubmit={props.handleRouteSubmit}
+        isLoading={props.isLoading}
       />
 
       {props.routes && (
