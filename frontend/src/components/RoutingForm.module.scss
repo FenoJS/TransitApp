@@ -8,6 +8,35 @@
   background-color: #fdf9f9;
   margin-bottom: 0.5rem;
   box-shadow: 1px 2px 5px 0px #909090;
+
+  &:last-child {
+    position: relative;
+  }
+
+  &:last-child::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: solid #fff;
+    border-width: 0 3px 3px 0;
+    padding: 4px;
+    transform: rotate(-45deg);
+    top: 42%;
+    left: 81%;
+  }
+
+  &:last-child::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-bottom: 3px solid #fff;
+    padding: 10px;
+    top: 10%;
+    left: 79%;
+    z-index: 1;
+  }
 }
 .inputImg {
   height: 5rem;
@@ -18,7 +47,9 @@
 .submit {
   color: #fff;
   background-color: #103856;
+  padding-right: 3rem;
 }
+
 input {
   flex: 1;
   font-size: 2rem;

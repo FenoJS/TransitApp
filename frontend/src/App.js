@@ -25,7 +25,7 @@ class App extends Component {
 
   componentDidUpdate(prevProps, prevState) {}
 
-  handleMarkersCords = async (marker, cords, dragged) => {
+  handleMarkersCords = async (marker, cords, isDragged) => {
     const address = await this.getAddressFromGeocode(cords);
     const directionToUpdate = {
       startMarkerPos: 'startDirection',
@@ -36,30 +36,33 @@ class App extends Component {
       [directionToUpdate[marker]]: address,
     });
 
-    if (dragged) {
+    if (isDragged && this.state.startMarkerPos && this.state.goalMarkerPos) {
       await this.handleRouteSubmit();
     }
   };
 
   handleRouteSubmit = async () => {
-    console.log('submited');
-    const startCords = this.state.startMarkerPos;
-    const goalCords = this.state.goalMarkerPos;
-    console.log(startCords, goalCords);
-    this.setState({
-      isLoading: true,
-    });
-    const data = await fetch(
-      `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26`
-    ).then(res => res.json());
+    if (this.state.startMarkerPos && this.state.goalMarkerPos) {
+      console.log('submited');
+      const startCords = this.state.startMarkerPos;
+      const goalCords = this.state.goalMarkerPos;
+      console.log(startCords, goalCords);
+      this.setState({
+        isLoading: true,
+      });
+      const data = await fetch(
+        `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26`
+      ).then(res => res.json());
 
-    const routesData = await data.plan.itineraries;
-    console.log('routesData', routesData);
-    await this.setState({
-      routes: routesData,
-      isLoading: false,
-    });
+      const routesData = await data.plan.itineraries;
+      console.log('routesData', routesData);
+      await this.setState({
+        routes: routesData,
+        isLoading: false,
+      });
+    }
   };
+
   // fromPlace=52.27315,21.06302&toPlace=52.25513,21.03436
 
   getAddressFromGeocode = async geocode => {
@@ -121,7 +124,6 @@ class App extends Component {
           goalMarkerPos={this.state.goalMarkerPos}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
-          handleRouteSubmit={this.handleRouteSubmit}
           route={
             this.state.routes && this.state.routes[this.state.routeToRender - 1]
           }
