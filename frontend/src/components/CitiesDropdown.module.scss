@@ -1,0 +1,86 @@
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  width: 20rem;
+  margin-right: 6rem;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 0 7rem;
+  position: relative;
+  border: 1px solid #154f7b;
+  border-width: 0 1px 0 1px;
+  padding-left: 2rem;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 45%;
+    right: 21%;
+    border: 2px solid #fff;
+    border-width: 0 0 2px 2px;
+    padding: 5px;
+    transform: rotate(-45deg);
+    opacity: 1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 55%;
+    right: 21%;
+    border: 2px solid #fff;
+    border-width: 2px 2px 0 0;
+    padding: 5px;
+    transform: rotate(-45deg);
+    opacity: 0;
+  }
+  &ArrowUp {
+    &::before {
+      opacity: 0;
+    }
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+.ddInfo {
+  font-size: 1rem;
+}
+
+.selectedItem {
+  font-size: 2rem;
+}
+
+.ddList {
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  list-style: none;
+}
+
+.ddItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  flex: 1 0 6rem;
+  background-color: #154f7b;
+  border: 2px solid #103856;
+  border-top: 2px solid transparent;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #103856;
+  }
+
+  &:first-child {
+    border-top: none;
+  }
+}

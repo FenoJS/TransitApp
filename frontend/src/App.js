@@ -43,10 +43,8 @@ class App extends Component {
 
   handleRouteSubmit = async () => {
     if (this.state.startMarkerPos && this.state.goalMarkerPos) {
-      console.log('submited');
       const startCords = this.state.startMarkerPos;
       const goalCords = this.state.goalMarkerPos;
-      console.log(startCords, goalCords);
       this.setState({
         isLoading: true,
       });
@@ -55,15 +53,12 @@ class App extends Component {
       ).then(res => res.json());
 
       const routesData = await data.plan.itineraries;
-      console.log('routesData', routesData);
       await this.setState({
         routes: routesData,
         isLoading: false,
       });
     }
   };
-
-  // fromPlace=52.27315,21.06302&toPlace=52.25513,21.03436
 
   getAddressFromGeocode = async geocode => {
     const provider = new OpenStreetMapProvider({
@@ -105,7 +100,6 @@ class App extends Component {
   };
 
   handleRouteToRender = routeNumber => {
-    console.log('update number');
     this.setState({
       routeToRender: routeNumber,
     });
@@ -124,6 +118,7 @@ class App extends Component {
           goalMarkerPos={this.state.goalMarkerPos}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
+          isLoading={this.state.isLoading}
           route={
             this.state.routes && this.state.routes[this.state.routeToRender - 1]
           }

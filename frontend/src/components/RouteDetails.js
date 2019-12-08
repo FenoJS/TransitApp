@@ -9,21 +9,19 @@ import pedestrianIcon from '../assets/images/man.png';
 const RouteDetails = props => {
   const handleHover = number => {
     props.handleRouteToRender(number);
-    console.log('hovered', number);
   };
 
   const renderLeaveTime = () => {
     const walkDuration = props.route.legs[0].duration;
     const departureTime = props.route.legs[1].startTime;
     const now = Date.now();
-    console.log(now, walkDuration);
+
     const time =
       new Date(departureTime - now).getMinutes() - Math.ceil(walkDuration / 60);
     return time;
   };
 
   const renderVehicles = route => {
-    console.log(route);
     const vehicles = route.legs.map(leg => {
       if (leg.mode !== 'WALK') {
         const icons = {

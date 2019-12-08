@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import submitIcon from '../assets/images/submit-icon.png';
 import styles from './RoutingForm.module.scss';
 
-console.log(styles);
-
 class RoutingForm extends Component {
   constructor(props) {
     super(props);
@@ -38,12 +36,10 @@ class RoutingForm extends Component {
     if (e.key === 'Enter') {
       e.preventDefault();
       this.props.getMarkerFromAddress(e.target.value, e.target.name);
-      console.log(e.target);
     }
   };
 
   render() {
-    console.log('render Form', this.props);
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
         <div className={styles.inputWrapper}>
