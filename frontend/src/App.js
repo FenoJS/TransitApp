@@ -45,11 +45,17 @@ class App extends Component {
     if (this.state.startMarkerPos && this.state.goalMarkerPos) {
       const startCords = this.state.startMarkerPos;
       const goalCords = this.state.goalMarkerPos;
+      const queryHour = new Date().getHours();
+      const queryMinutes = new Date().getMinutes();
+      const currentTime = `${
+        queryHour < 10 ? '0' : ''
+      }${queryHour}:${queryMinutes}`;
+
       this.setState({
         isLoading: true,
       });
       const data = await fetch(
-        `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26`
+        `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
       ).then(res => res.json());
 
       const routesData = await data.plan.itineraries;

@@ -16,8 +16,21 @@ const RouteDetails = props => {
     const departureTime = props.route.legs[1].startTime;
     const now = Date.now();
 
-    const time =
-      new Date(departureTime - now).getMinutes() - Math.ceil(walkDuration / 60);
+    const getDepartureHours = new Date(departureTime).getHours();
+    const getDepartureMinutes = new Date(departureTime).getMinutes();
+    const departureTimeinMinutes = getDepartureHours * 60 + getDepartureMinutes;
+
+    const getCurrentHours = new Date(now).getHours();
+    const getCurrentMinutes = new Date(now).getMinutes();
+    const currentTimeinMinutes = getCurrentHours * 60 + getCurrentMinutes;
+
+    const minutesToLeave = departureTimeinMinutes - currentTimeinMinutes;
+
+    const hours = Math.floor(minutesToLeave / 60);
+    const minutes = minutesToLeave % 60;
+    const time = `${hours > 0 ? hours : ''}${hours > 0 ? 'h' : ''} ${minutes -
+      Math.ceil(walkDuration / 60)} min`;
+
     return time;
   };
 
@@ -51,7 +64,7 @@ const RouteDetails = props => {
     >
       <div className={styles.routeDeparture}>
         <span>Wyjdź za: </span>
-        <div className={styles.departureTime}>{renderLeaveTime()} min</div>
+        <div className={styles.departureTime}>{renderLeaveTime()}</div>
       </div>
       <div className={styles.routeDetailsWrapper}>
         <div className={styles.routeDetails}>
