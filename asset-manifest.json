@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/TransitApp/static/css/main.8d31e13e.chunk.css",
+    "main.js": "/TransitApp/static/js/main.372073de.chunk.js",
+    "main.js.map": "/TransitApp/static/js/main.372073de.chunk.js.map",
+    "runtime~main.js": "/TransitApp/static/js/runtime~main.f5c548c3.js",
+    "runtime~main.js.map": "/TransitApp/static/js/runtime~main.f5c548c3.js.map",
+    "static/js/2.2dc5f7f5.chunk.js": "/TransitApp/static/js/2.2dc5f7f5.chunk.js",
+    "static/js/2.2dc5f7f5.chunk.js.map": "/TransitApp/static/js/2.2dc5f7f5.chunk.js.map",
+    "index.html": "/TransitApp/index.html",
+    "precache-manifest.487b8d3213c7252803ff4f2c72a9d769.js": "/TransitApp/precache-manifest.487b8d3213c7252803ff4f2c72a9d769.js",
+    "service-worker.js": "/TransitApp/service-worker.js",
+    "static/css/main.8d31e13e.chunk.css.map": "/TransitApp/static/css/main.8d31e13e.chunk.css.map",
+    "static/media/guestAvatar.svg": "/TransitApp/static/media/guestAvatar.16762100.svg"
+  }
+}
