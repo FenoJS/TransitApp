@@ -14,6 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   font-size: 1.5rem;
   color: #fff;
   width: 10rem;
@@ -21,4 +22,79 @@
   background-color: #103856;
   border-radius: 10px;
   box-shadow: 1px 3px 5px 2px rgba(0, 0, 0, 0.3);
+}
+
+.loading {
+  z-index: 100;
+  color: white;
+  text-shadow: 3px 3px 7px rgba(0, 0, 0, 0.84);
+}
+
+.dot {
+  position: absolute;
+  top: 34px;
+  font-size: 2rem;
+  animation: showHideDot 0.7s ease-in-out infinite;
+
+  &One {
+    animation-delay: 0.1s;
+    left: 29px;
+    color: #97ccfd;
+  }
+  &Two {
+    animation-delay: 0.2s;
+    left: 37px;
+    color: #f78e8f;
+  }
+  &Three {
+    animation-delay: 0.3s;
+    left: 45px;
+    color: #97ccfd;
+  }
+  &Four {
+    animation-delay: 0.4s;
+    left: 53px;
+    color: #f78e8f;
+  }
+  &Five {
+    animation-delay: 0.5s;
+    left: 61px;
+    color: #97ccfd;
+  }
+}
+
+@keyframes showHideDot {
+  0% {
+    top: 34px;
+  }
+  10% {
+    top: 24px;
+  }
+  20% {
+    top: 10px;
+  }
+  30% {
+    top: 10px;
+  }
+  40% {
+    top: 24px;
+  }
+  50% {
+    top: 34px;
+  }
+  60% {
+    top: 44px;
+  }
+  70% {
+    top: 54px;
+  }
+  80% {
+    top: 54px;
+  }
+  90% {
+    top: 44px;
+  }
+  100% {
+    top: 34px;
+  }
 }

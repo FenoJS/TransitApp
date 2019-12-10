@@ -11,15 +11,10 @@ const Header = () => {
     <div className={styles.header}>
       <img src={logo} alt="logo" className={styles.logo} />
       <div className={styles.sideBarWrapper}>
-        {/* <div className={styles.placeholderfordropdowncomponent}>Warszawa</div> */}
         <CitiesDropdown />
         <div className={styles.loginContainer}>
           <div className={styles.avatarBox}>
-            <img
-              src={guestAvatar}
-              alt="user avatar"
-              className={styles.avatar}
-            />
+            <img src={guestAvatar} alt="user avatar" className={styles.avatar} />
           </div>
 
           <span className={styles.signIn}>Zaloguj się</span>
