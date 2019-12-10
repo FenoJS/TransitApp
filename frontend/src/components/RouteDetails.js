@@ -16,22 +16,41 @@ const RouteDetails = props => {
     const departureTime = props.route.legs[1].startTime;
     const now = Date.now();
 
-    const getDepartureHours = new Date(departureTime).getHours();
-    const getDepartureMinutes = new Date(departureTime).getMinutes();
-    const departureTimeinMinutes = getDepartureHours * 60 + getDepartureMinutes;
+    const convertUnixToMinutes = dataSource => {
+      const getHours = new Date(dataSource).getHours();
+      const getMinutes = new Date(dataSource).getMinutes();
+      const countedMinutes = getHours * 60 + getMinutes;
+      return countedMinutes;
+    };
 
-    const getCurrentHours = new Date(now).getHours();
-    const getCurrentMinutes = new Date(now).getMinutes();
-    const currentTimeinMinutes = getCurrentHours * 60 + getCurrentMinutes;
+    const departureTimeinMinutes = convertUnixToMinutes(departureTime);
+    const currentTimeinMinutes = convertUnixToMinutes(now);
 
     const minutesToLeave = departureTimeinMinutes - currentTimeinMinutes;
+    const totalHours = Math.floor(minutesToLeave / 60);
+    const minutesToDisplay = minutesToLeave % 60;
 
-    const hours = Math.floor(minutesToLeave / 60);
-    const minutes = minutesToLeave % 60;
-    const time = `${hours > 0 ? hours : ''}${hours > 0 ? 'h' : ''} ${minutes -
-      Math.ceil(walkDuration / 60)} min`;
+    const formatTimer = () => {
+      let hours;
+      let minutes;
 
-    return time;
+      if (totalHours > 0) {
+        hours = `${totalHours}h`;
+        minutes = `${minutesToDisplay - Math.ceil(walkDuration / 60)} min`;
+
+        if (minutesToDisplay - Math.ceil(walkDuration / 60) < 0) {
+          console.log(totalHours - 1 === 0);
+          hours = `${totalHours - 1 === 0 ? '' : totalHours - 1}${totalHours - 1 > 0 ? 'h' : ''}`;
+          minutes = `${60 + (minutesToDisplay - Math.ceil(walkDuration / 60))} min`;
+        }
+      } else {
+        hours = '';
+        minutes = `${minutesToDisplay - Math.ceil(walkDuration / 60)} min`;
+      }
+      return `${hours} ${minutes}`;
+    };
+
+    return formatTimer();
   };
 
   const renderVehicles = route => {
@@ -45,11 +64,7 @@ const RouteDetails = props => {
         };
         return (
           <>
-            <img
-              className={styles.vehicleImg}
-              src={icons[leg.mode.toLowerCase()]}
-              alt={leg.mode.toLowerCase()}
-            />
+            <img className={styles.vehicleImg} src={icons[leg.mode.toLowerCase()]} alt={leg.mode.toLowerCase()} />
             <div className={styles.vehicleNum}>{leg.route}</div>
           </>
         );
@@ -57,47 +72,35 @@ const RouteDetails = props => {
     });
     return vehicles;
   };
+
+  const { route } = props;
+  const { legs, duration } = route;
   return (
-    <div
-      className={styles.routeContainer}
-      onMouseOver={() => handleHover(props.routeNumber)}
-    >
+    <div className={styles.routeContainer} onMouseOver={() => handleHover(props.routeNumber)}>
       <div className={styles.routeDeparture}>
         <span>Wyjdź za: </span>
         <div className={styles.departureTime}>{renderLeaveTime()}</div>
       </div>
       <div className={styles.routeDetailsWrapper}>
         <div className={styles.routeDetails}>
-          <div className={styles.vehicles}>{renderVehicles(props.route)}</div>
+          <div className={styles.vehicles}>{renderVehicles(route)}</div>
           <div className={styles.routeDuration}>
-            {Math.ceil(props.route.duration / 60)} min
+            {Math.ceil(duration / 60)}
+            min
           </div>
         </div>
         <div className={styles.departureDetails}>
           <span className={styles.travelTime}>
             <img className={styles.pedestrianImg} src={pedestrianIcon} alt="" />
-            {Math.ceil(props.route.legs[0].duration / 60)} min
-          </span>
-          <span className={styles.travelStartTime}>
-            {new Date(props.route.legs[1].startTime).toString().slice(16, 21)}
-          </span>
-          <span className={styles.travelTime}>
-            {new Date(
-              props.route.legs[props.route.legs.length - 2].endTime -
-                props.route.legs[1].startTime
-            ).getMinutes()}{' '}
+            {Math.ceil(legs[0].duration / 60)}
             min
           </span>
-          <span className={styles.travelEndTime}>
-            {new Date(props.route.legs[props.route.legs.length - 2].endTime)
-              .toString()
-              .slice(16, 21)}
-          </span>
+          <span className={styles.travelStartTime}>{new Date(legs[1].startTime).toString().slice(16, 21)}</span>
+          <span className={styles.travelTime}>{new Date(legs[legs.length - 2].endTime - legs[1].startTime).getMinutes()} min</span>
+          <span className={styles.travelEndTime}>{new Date(legs[legs.length - 2].endTime).toString().slice(16, 21)}</span>
           <span className={styles.travelTime}>
             <img className={styles.pedestrianImg} src={pedestrianIcon} alt="" />
-            {Math.ceil(
-              props.route.legs[props.route.legs.length - 1].duration / 60
-            )}{' '}
+            {Math.ceil(legs[legs.length - 1].duration / 60)}
             min
           </span>
         </div>

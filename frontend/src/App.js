@@ -42,14 +42,14 @@ class App extends Component {
   };
 
   handleRouteSubmit = async () => {
-    if (this.state.startMarkerPos && this.state.goalMarkerPos) {
-      const startCords = this.state.startMarkerPos;
-      const goalCords = this.state.goalMarkerPos;
+    const { startMarkerPos, goalMarkerPos } = this.state;
+
+    if (startMarkerPos && goalMarkerPos) {
+      const startCords = startMarkerPos;
+      const goalCords = goalMarkerPos;
       const queryHour = new Date().getHours();
       const queryMinutes = new Date().getMinutes();
-      const currentTime = `${
-        queryHour < 10 ? '0' : ''
-      }${queryHour}:${queryMinutes}`;
+      const currentTime = `${queryHour < 10 ? '0' : ''}${queryHour}:${queryMinutes < 10 ? '0' : ''}${queryMinutes}`;
 
       this.setState({
         isLoading: true,
@@ -81,9 +81,7 @@ class App extends Component {
     const geoString = `${lat_x}, ${lng_y}`;
 
     // if there is no address show geocode
-    return `${address.road ? address.road : geoString} ${
-      address.house_number ? address.house_number : ''
-    }`;
+    return `${address.road ? address.road : geoString} ${address.house_number ? address.house_number : ''}`;
   };
 
   getMarkerFromAddress = async (address, direction) => {
@@ -113,32 +111,33 @@ class App extends Component {
 
   render() {
     console.log('render App');
+
+    const { mapPosition, startMarkerPos, goalMarkerPos, isLoading, routes, routeToRender, startDirection, goalDirection } = this.state;
+
     return (
       <>
         <Header />
-        {this.state.isLoading && <LoadingScreen />}
+        {isLoading && <LoadingScreen />}
         <Map
-          mapPosition={this.state.mapPosition}
+          mapPosition={mapPosition}
           handleMarkersCords={this.handleMarkersCords}
-          startMarkerPos={this.state.startMarkerPos}
-          goalMarkerPos={this.state.goalMarkerPos}
+          startMarkerPos={startMarkerPos}
+          goalMarkerPos={goalMarkerPos}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
-          isLoading={this.state.isLoading}
-          route={
-            this.state.routes && this.state.routes[this.state.routeToRender - 1]
-          }
+          isLoading={isLoading}
+          route={routes && routes[routeToRender - 1]}
         />
         <RoutingPanel
           getMarkerFromAddress={this.getMarkerFromAddress}
-          startDirection={this.state.startDirection}
-          goalDirection={this.state.goalDirection}
+          startDirection={startDirection}
+          goalDirection={goalDirection}
           startMarkerIcon={startMarkerIcon}
           goalMarkerIcon={goalMarkerIcon}
           handleRouteSubmit={this.handleRouteSubmit}
-          routes={this.state.routes}
+          routes={routes}
           handleRouteToRender={this.handleRouteToRender}
-          isLoading={this.state.isLoading}
+          isLoading={isLoading}
         />
       </>
     );
