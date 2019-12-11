@@ -64,7 +64,11 @@ const RouteDetails = props => {
         };
         return (
           <>
-            <img className={styles.vehicleImg} src={icons[leg.mode.toLowerCase()]} alt={leg.mode.toLowerCase()} />
+            <img
+              className={styles.vehicleImg}
+              src={icons[leg.mode.toLowerCase()]}
+              alt={leg.mode.toLowerCase()}
+            />
             <div className={styles.vehicleNum}>{leg.route}</div>
           </>
         );
@@ -95,9 +99,15 @@ const RouteDetails = props => {
             {Math.ceil(legs[0].duration / 60)}
             min
           </span>
-          <span className={styles.travelStartTime}>{new Date(legs[1].startTime).toString().slice(16, 21)}</span>
-          <span className={styles.travelTime}>{new Date(legs[legs.length - 2].endTime - legs[1].startTime).getMinutes()} min</span>
-          <span className={styles.travelEndTime}>{new Date(legs[legs.length - 2].endTime).toString().slice(16, 21)}</span>
+          <span className={styles.travelStartTime}>
+            {new Date(legs[1].startTime).toString().slice(16, 21)}
+          </span>
+          <span className={styles.travelTime}>
+            {new Date(legs[legs.length - 2].endTime - legs[1].startTime).getMinutes()} min
+          </span>
+          <span className={styles.travelEndTime}>
+            {new Date(legs[legs.length - 2].endTime).toString().slice(16, 21)}
+          </span>
           <span className={styles.travelTime}>
             <img className={styles.pedestrianImg} src={pedestrianIcon} alt="" />
             {Math.ceil(legs[legs.length - 1].duration / 60)}

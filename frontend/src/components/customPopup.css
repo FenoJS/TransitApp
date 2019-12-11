@@ -1,14 +1,16 @@
 .markersPopup .leaflet-popup-content-wrapper {
   border-radius: 0;
+  width: 25rem;
 }
 
 .markersPopup .leaflet-popup-content {
   margin: 0;
-  width: 25rem;
+  width: 25rem !important;
 }
 
 .markersPopup .leaflet-popup-tip-container {
   display: none;
+  width: 25rem;
 }
 
 /* .vehicleNumMarker .leaflet-popup-content-wrapper {

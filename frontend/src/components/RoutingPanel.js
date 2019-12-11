@@ -5,23 +5,31 @@ import RoutingDetails from './RoutingDetails';
 import styles from './RoutingPanel.module.scss';
 
 const RoutingPanel = props => {
+  const {
+    getMarkerFromAddress,
+    startDirection,
+    goalDirection,
+    startMarkerIcon,
+    goalMarkerIcon,
+    handleRouteSubmit,
+    isLoading,
+    routes,
+    handleRouteToRender,
+  } = props;
   return (
     <div className={styles.panel}>
       <RoutingForm
-        getMarkerFromAddress={props.getMarkerFromAddress}
-        startDirection={props.startDirection}
-        goalDirection={props.goalDirection}
-        startMarkerIcon={props.startMarkerIcon}
-        goalMarkerIcon={props.goalMarkerIcon}
-        handleRouteSubmit={props.handleRouteSubmit}
-        isLoading={props.isLoading}
+        getMarkerFromAddress={getMarkerFromAddress}
+        startDirection={startDirection}
+        goalDirection={goalDirection}
+        startMarkerIcon={startMarkerIcon}
+        goalMarkerIcon={goalMarkerIcon}
+        handleRouteSubmit={handleRouteSubmit}
+        isLoading={isLoading}
       />
 
-      {props.routes && (
-        <RoutingDetails
-          routes={props.routes}
-          handleRouteToRender={props.handleRouteToRender}
-        ></RoutingDetails>
+      {routes && (
+        <RoutingDetails routes={routes} handleRouteToRender={handleRouteToRender}></RoutingDetails>
       )}
     </div>
   );

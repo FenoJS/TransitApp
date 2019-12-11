@@ -23,8 +23,6 @@ class App extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {}
-
   handleMarkersCords = async (marker, cords, isDragged) => {
     const address = await this.getAddressFromGeocode(cords);
     const directionToUpdate = {
@@ -49,13 +47,15 @@ class App extends Component {
       const goalCords = goalMarkerPos;
       const queryHour = new Date().getHours();
       const queryMinutes = new Date().getMinutes();
-      const currentTime = `${queryHour < 10 ? '0' : ''}${queryHour}:${queryMinutes < 10 ? '0' : ''}${queryMinutes}`;
+      const currentTime = `
+        ${queryHour < 10 ? '0' : ''}${queryHour}:${queryMinutes < 10 ? '0' : ''}${queryMinutes}
+        `;
 
       this.setState({
         isLoading: true,
       });
       const data = await fetch(
-        `http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
+        `https://cors-anywhere.herokuapp.com/http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
       ).then(res => res.json());
 
       const routesData = await data.plan.itineraries;
@@ -81,7 +81,9 @@ class App extends Component {
     const geoString = `${lat_x}, ${lng_y}`;
 
     // if there is no address show geocode
-    return `${address.road ? address.road : geoString} ${address.house_number ? address.house_number : ''}`;
+    return `${address.road ? address.road : geoString} ${
+      address.house_number ? address.house_number : ''
+    }`;
   };
 
   getMarkerFromAddress = async (address, direction) => {
@@ -112,7 +114,16 @@ class App extends Component {
   render() {
     console.log('render App');
 
-    const { mapPosition, startMarkerPos, goalMarkerPos, isLoading, routes, routeToRender, startDirection, goalDirection } = this.state;
+    const {
+      mapPosition,
+      startMarkerPos,
+      goalMarkerPos,
+      isLoading,
+      routes,
+      routeToRender,
+      startDirection,
+      goalDirection,
+    } = this.state;
 
     return (
       <>

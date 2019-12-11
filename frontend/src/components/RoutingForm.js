@@ -12,10 +12,7 @@ class RoutingForm extends Component {
   componentDidUpdate(prevProps) {
     const { startDirection, goalDirection } = this.props;
 
-    if (
-      startDirection !== prevProps.startDirection ||
-      goalDirection !== prevProps.goalDirection
-    ) {
+    if (startDirection !== prevProps.startDirection || goalDirection !== prevProps.goalDirection) {
       this.setState({
         startDirection,
         goalDirection,
@@ -40,33 +37,27 @@ class RoutingForm extends Component {
   };
 
   render() {
+    const { startMarkerIcon, goalMarkerIcon, isLoading } = this.props;
+    const { startDirection, goalDirection } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className={styles.form}>
         <div className={styles.inputWrapper}>
-          <img
-            src={this.props.startMarkerIcon}
-            alt=""
-            className={styles.inputImg}
-          />
+          <img src={startMarkerIcon} alt="" className={styles.inputImg} />
           <input
             type="text"
             placeholder="Punk początkowy..."
-            value={this.state.startDirection}
+            value={startDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
             name="startDirection"
           />
         </div>
         <div className={styles.inputWrapper}>
-          <img
-            src={this.props.goalMarkerIcon}
-            alt=""
-            className={styles.inputImg}
-          />
+          <img src={goalMarkerIcon} alt="" className={styles.inputImg} />
           <input
             type="text"
             placeholder="Punk docelowy..."
-            value={this.state.goalDirection}
+            value={goalDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
             name="goalDirection"
@@ -78,7 +69,7 @@ class RoutingForm extends Component {
             type="submit"
             className={styles.submit}
             value="Szukaj Połączenia"
-            disabled={this.props.isLoading}
+            disabled={isLoading}
           />
         </div>
       </form>

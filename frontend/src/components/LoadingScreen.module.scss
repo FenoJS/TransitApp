@@ -32,69 +32,69 @@
 
 .dot {
   position: absolute;
-  top: 34px;
+  top: 3.4rem;
   font-size: 2rem;
   animation: showHideDot 0.7s ease-in-out infinite;
 
   &One {
     animation-delay: 0.1s;
-    left: 29px;
+    left: 3rem;
     color: #97ccfd;
   }
   &Two {
     animation-delay: 0.2s;
-    left: 37px;
+    left: 3.8rem;
     color: #f78e8f;
   }
   &Three {
     animation-delay: 0.3s;
-    left: 45px;
+    left: 4.6rem;
     color: #97ccfd;
   }
   &Four {
     animation-delay: 0.4s;
-    left: 53px;
+    left: 5.4rem;
     color: #f78e8f;
   }
   &Five {
     animation-delay: 0.5s;
-    left: 61px;
+    left: 6.2rem;
     color: #97ccfd;
   }
 }
 
 @keyframes showHideDot {
   0% {
-    top: 34px;
+    top: 3.4rem;
   }
   10% {
-    top: 24px;
+    top: 2.4rem;
   }
   20% {
-    top: 10px;
+    top: 1rem;
   }
   30% {
-    top: 10px;
+    top: 1rem;
   }
   40% {
-    top: 24px;
+    top: 2.4rem;
   }
   50% {
-    top: 34px;
+    top: 3.4rem;
   }
   60% {
-    top: 44px;
+    top: 4.4rem;
   }
   70% {
-    top: 54px;
+    top: 5.4rem;
   }
   80% {
-    top: 54px;
+    top: 5.4rem;
   }
   90% {
-    top: 44px;
+    top: 4.4rem;
   }
   100% {
-    top: 34px;
+    top: 3.4rem;
   }
 }

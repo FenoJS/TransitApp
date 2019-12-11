@@ -19,20 +19,14 @@ const CitiesDropdown = () => {
 
   return (
     <div className={styles.dropdown}>
-      <div
-        className={`${styles.menu} ${isOpen ? styles.menuArrowUp : null}`}
-        onClick={() => handleToggle()}
-      >
+      <div className={`${styles.menu} ${isOpen ? styles.menuArrowUp : null}`} onClick={() => handleToggle()}>
         <span className={styles.ddInfo}>Wybierz miasto:</span>
         <span className={styles.selectedItem}>{selectedCity}</span>
       </div>
       {isOpen && (
         <ul className={styles.ddList}>
           {cities.map(city => (
-            <li
-              className={styles.ddItem}
-              onClick={e => handleDropdownList(city)}
-            >
+            <li className={styles.ddItem} onClick={e => handleDropdownList(city)}>
               {city}
             </li>
           ))}

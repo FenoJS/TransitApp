@@ -99,7 +99,7 @@ class Map extends Component {
           } class=${styles.vehicleImg} alt=""/>
           <span class=${styles.vehicleNum}>${leg.route}</span></div>`,
         });
-        return <Marker position={[leg.from.lat, leg.from.lon]} icon={icon} />;
+        return <Marker position={[leg.from.lat, leg.from.lon]} key={leg.startTime} icon={icon} />;
       }
     });
     return markers;
@@ -114,6 +114,7 @@ class Map extends Component {
       startMarkerIcon,
       goalMarkerIcon,
       route,
+      isLoading,
     } = this.props;
 
     const bounds = L.latLngBounds([startMarkerPos, goalMarkerPos]);
@@ -132,7 +133,7 @@ class Map extends Component {
         <ZoomControl position="topright" />
         <TileLayer
           url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-          attribution='Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+          attribution='Wikimedia Maps | Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
         />
         {isPopup && (
           <Popup
@@ -144,19 +145,13 @@ class Map extends Component {
               y: 100,
             }}
           >
-            <button
-              type="button"
-              onClick={() => this.addMarker('startMarkerPos', popupCords)}
-            >
+            <button type="button" onClick={() => this.addMarker('startMarkerPos', popupCords)}>
               <img className={styles.buttonImg} src={startMarkerIcon} alt="" />
-              <span>Ustaw lokalizację początkową</span>
+              <span className={styles.markerText}>Ustaw lokalizację początkową</span>
             </button>
-            <button
-              type="button"
-              onClick={() => this.addMarker('goalMarkerPos', popupCords)}
-            >
+            <button type="button" onClick={() => this.addMarker('goalMarkerPos', popupCords)}>
               <img className={styles.buttonImg} src={goalMarkerIcon} alt="" />
-              <span>Ustaw lokalizację docelową</span>
+              <span className={styles.markerText}>Ustaw lokalizację docelową</span>
             </button>
           </Popup>
         )}
@@ -176,8 +171,8 @@ class Map extends Component {
             onDragEnd={e => this.updateDraggedMarkerPos('goalMarkerPos', e)}
           />
         )}
-        {route && !this.props.isLoading && this.renderPolylines(route)}
-        {route && !this.props.isLoading && this.renderVehiclesMarkers(route)}
+        {route && !isLoading && this.renderPolylines(route)}
+        {route && !isLoading && this.renderVehiclesMarkers(route)}
       </MapContainer>
     );
   }

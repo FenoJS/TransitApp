@@ -19,11 +19,17 @@
     width: 0;
     height: 0;
     border: solid #fff;
-    border-width: 0 3px 3px 0;
-    padding: 4px;
+    border-width: 0 0.3rem 0.3rem 0;
+    padding: 0.4rem;
     transform: rotate(-45deg);
     top: 42%;
     left: 81%;
+
+    @media (max-width: 1400px) {
+      border-width: 0 0.4rem 0.4rem 0;
+      top: 38%;
+      left: 80%;
+    }
   }
 
   &:last-child::before {
@@ -31,11 +37,17 @@
     position: absolute;
     width: 0;
     height: 0;
-    border-bottom: 3px solid #fff;
-    padding: 10px;
+    border-bottom: 0.3rem solid #fff;
+    padding: 1rem;
     top: 10%;
     left: 79%;
     z-index: 1;
+
+    @media (max-width: 1400px) {
+      border-bottom: 0.4rem solid #fff;
+      top: 4%;
+      left: 78%;
+    }
   }
 }
 .inputImg {
