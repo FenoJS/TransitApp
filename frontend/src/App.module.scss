@@ -4,6 +4,9 @@ html {
   @media (max-width: 1400px) {
     font-size: 50%; /* 1rem = 8px */
   }
+  @media (max-width: 430px) {
+    font-size: 37.5%; /* 1rem = 6px */
+  }
 }
 
 *,

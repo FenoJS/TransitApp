@@ -36,11 +36,18 @@ class RoutingForm extends Component {
     }
   };
 
+  handleMouseLeave = e => {
+    const { startDirection, goalDirection } = this.state;
+    if (startDirection.length > 0 || goalDirection.length > 0) {
+      this.props.getMarkerFromAddress(e.target.value, e.target.name);
+    }
+  };
+
   render() {
     const { startMarkerIcon, goalMarkerIcon, isLoading } = this.props;
     const { startDirection, goalDirection } = this.state;
     return (
-      <form onSubmit={this.handleSubmit} className={styles.form}>
+      <form onSubmit={this.handleSubmit} className={styles.form} autoComplete="off">
         <div className={styles.inputWrapper}>
           <img src={startMarkerIcon} alt="" className={styles.inputImg} />
           <input
@@ -49,6 +56,7 @@ class RoutingForm extends Component {
             value={startDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
+            onMouseOut={this.handleMouseLeave}
             name="startDirection"
           />
         </div>
@@ -60,6 +68,7 @@ class RoutingForm extends Component {
             value={goalDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
+            onMouseOut={this.handleMouseLeave}
             name="goalDirection"
           />
         </div>

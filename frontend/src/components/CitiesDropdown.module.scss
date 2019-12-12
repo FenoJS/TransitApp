@@ -3,6 +3,12 @@
   flex-direction: column;
   width: 20rem;
   margin-right: 6rem;
+
+  @media (max-width: 430px) {
+    width: 100%;
+    margin-right: 3rem;
+    z-index: 99999;
+  }
 }
 
 .menu {
@@ -26,6 +32,11 @@
     padding: 5px;
     transform: rotate(-45deg);
     opacity: 1;
+
+    @media (max-width: 430px) {
+      top: 28%;
+      right: 10%;
+    }
   }
 
   &::after {
@@ -38,6 +49,11 @@
     padding: 5px;
     transform: rotate(-45deg);
     opacity: 0;
+
+    @media (max-width: 430px) {
+      top: 46%;
+      right: 10%;
+    }
   }
   &ArrowUp {
     &::before {
