@@ -99,10 +99,13 @@ class App extends Component {
       startDirection: 'startMarkerPos',
       goalDirection: 'goalMarkerPos',
     };
-    this.setState({
+    await this.setState({
       [markerToUpdate[direction]]: [results[0].y, results[0].x],
       [direction]: address,
     });
+    if (this.state.startMarkerPos && this.state.goalMarkerPos) {
+      await this.handleRouteSubmit();
+    }
   };
 
   handleRouteToRender = routeNumber => {

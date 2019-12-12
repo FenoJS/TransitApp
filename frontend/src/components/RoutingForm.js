@@ -36,12 +36,12 @@ class RoutingForm extends Component {
     }
   };
 
-  handleMouseLeave = e => {
-    const { startDirection, goalDirection } = this.state;
-    if (startDirection.length > 0 || goalDirection.length > 0) {
-      this.props.getMarkerFromAddress(e.target.value, e.target.name);
-    }
-  };
+  // handleMouseLeave = e => {
+  //   const { startDirection, goalDirection } = this.state;
+  //   if (startDirection.length > 0 || goalDirection.length > 0) {
+  //     this.props.getMarkerFromAddress(e.target.value, e.target.name);
+  //   }
+  // };
 
   render() {
     const { startMarkerIcon, goalMarkerIcon, isLoading } = this.props;
@@ -56,7 +56,7 @@ class RoutingForm extends Component {
             value={startDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
-            onMouseOut={this.handleMouseLeave}
+            // onMouseOut={this.handleMouseLeave}
             name="startDirection"
           />
         </div>
@@ -68,7 +68,7 @@ class RoutingForm extends Component {
             value={goalDirection}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
-            onMouseOut={this.handleMouseLeave}
+            // onMouseOut={this.handleMouseLeave}
             name="goalDirection"
           />
         </div>
