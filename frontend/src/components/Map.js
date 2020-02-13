@@ -123,7 +123,7 @@ class Map extends Component {
     return (
       <MapContainer
         center={mapPosition}
-        zoom={13}
+        zoom={12}
         style={mapRootStyles}
         zoomControl={false}
         onClick={this.togglePopup}
@@ -132,8 +132,11 @@ class Map extends Component {
       >
         <ZoomControl position="topright" />
         <TileLayer
-          url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png" //   'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-          attribution='Wikimedia Maps | Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+          tileSize={512}
+          zoomOffset={-1}
+          minZoom={1}
+          url="https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=ujopatsbklK8oL7isHO1"
+          attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">© MapTiler</a> | <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap </a>contributors'
         />
         {isPopup && (
           <Popup
