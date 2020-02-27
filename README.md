@@ -6,6 +6,8 @@ Due to technical limitations, as this is not a commercial project, timetables ar
 
 **LIVE: https://fenojs.github.io/TransitApp/**
 
+![preview](https://i.imgur.com/JaZXC1e.png)
+
 ## Built with
 
 #### frontend:
