@@ -1,5 +1,8 @@
 import React from 'react';
 
+import convertUnixToMinutes from '../utils/convertUnixToMinutes';
+import formatTimer from '../utils/formatTimer';
+
 import styles from './RouteDetails.module.scss';
 import busIcon from '../assets/images/bus.png';
 import tramIcon from '../assets/images/tram.png';
@@ -16,13 +19,6 @@ const RouteDetails = props => {
     const departureTime = props.route.legs[1].startTime;
     const now = Date.now();
 
-    const convertUnixToMinutes = dataSource => {
-      const getHours = new Date(dataSource).getHours();
-      const getMinutes = new Date(dataSource).getMinutes();
-      const countedMinutes = getHours * 60 + getMinutes;
-      return countedMinutes;
-    };
-
     const departureTimeinMinutes = convertUnixToMinutes(departureTime);
     const currentTimeinMinutes = convertUnixToMinutes(now);
 
@@ -30,27 +26,7 @@ const RouteDetails = props => {
     const totalHours = Math.floor(minutesToLeave / 60);
     const minutesToDisplay = minutesToLeave % 60;
 
-    const formatTimer = () => {
-      let hours;
-      let minutes;
-
-      if (totalHours > 0) {
-        hours = `${totalHours}h`;
-        minutes = `${minutesToDisplay - Math.ceil(walkDuration / 60)} min`;
-
-        if (minutesToDisplay - Math.ceil(walkDuration / 60) < 0) {
-          console.log(totalHours - 1 === 0);
-          hours = `${totalHours - 1 === 0 ? '' : totalHours - 1}${totalHours - 1 > 0 ? 'h' : ''}`;
-          minutes = `${60 + (minutesToDisplay - Math.ceil(walkDuration / 60))} min`;
-        }
-      } else {
-        hours = '';
-        minutes = `${minutesToDisplay - Math.ceil(walkDuration / 60)} min`;
-      }
-      return `${hours} ${minutes}`;
-    };
-
-    return formatTimer();
+    return formatTimer(minutesToDisplay, totalHours, walkDuration);
   };
 
   const renderVehicles = route => {
