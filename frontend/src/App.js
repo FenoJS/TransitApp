@@ -55,8 +55,8 @@ class App extends Component {
         isLoading: true,
       });
       const data = await fetch(
-        `https://cors-anywhere.herokuapp.com/http://34.76.181.57:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
-      ).then(res => res.json());
+        `https://cors-anywhere.herokuapp.com/http://35.205.51.254:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
+      ).then((res) => res.json());
 
       const routesData = await data.plan.itineraries;
       await this.setState({
@@ -66,7 +66,7 @@ class App extends Component {
     }
   };
 
-  getAddressFromGeocode = async geocode => {
+  getAddressFromGeocode = async (geocode) => {
     const provider = new OpenStreetMapProvider({
       params: {
         addressdetails: 1,
@@ -108,7 +108,7 @@ class App extends Component {
     }
   };
 
-  handleRouteToRender = routeNumber => {
+  handleRouteToRender = (routeNumber) => {
     this.setState({
       routeToRender: routeNumber,
     });
