@@ -55,7 +55,7 @@ class App extends Component {
         isLoading: true,
       });
       const data = await fetch(
-        `https://cors-anywhere.herokuapp.com/http://35.205.51.254:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
+        `https://cors-anywhere.herokuapp.com/http://23.102.180.220:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
       ).then((res) => res.json());
 
       const routesData = await data.plan.itineraries;

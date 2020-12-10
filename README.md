@@ -1,6 +1,6 @@
 # Transit App.
 
-Public transport planner. Allows you to search for optimised connections in public transport. It runs on Google Cloud Computing Services free tier and uses [OpenStreetMap](https://www.openstreetmap.org/copyright) API.
+Public transport planner. Allows you to search for optimised connections in public transport. It runs on Microsoft Azure VM and uses [OpenStreetMap](https://www.openstreetmap.org/copyright) API.
 
 Due to technical limitations, as this is not a commercial project, timetables are hard-coded for 2019 and may be currently inaccurate.
 
