@@ -54,9 +54,13 @@ class App extends Component {
       this.setState({
         isLoading: true,
       });
-      const data = await fetch(
-        `http://8.209.115.48:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`
-      ).then((res) => res.json());
+      const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(`http://8.209.115.48:8080/otp/routers/default/plan?fromPlace=${startCords}&toPlace=${goalCords}&date=2019-08-26&time=${currentTime}`)}`)
+      .then(response => {
+        if (response.ok) return response.json()
+        throw new Error('Network response was not ok.')
+      })
+      .then(data => JSON.parse(data.contents));
+
 
       const routesData = await data.plan.itineraries;
       await this.setState({
